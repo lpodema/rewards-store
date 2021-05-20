@@ -129,7 +129,7 @@ const Product = () => {
             onMouseEnter={() => handleMouse()}
             onMouseLeave={() => handleMouse()}>
             <ShoppingBagStyles>
-                <img src={bag} />
+                <img src={bag} alt={iphone8} />
             </ShoppingBagStyles>
             <ProductImage src={iphone8}></ProductImage>
             <Line />

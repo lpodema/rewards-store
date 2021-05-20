@@ -44,7 +44,7 @@ const UserInfo = () => {
             <Container>
                 <CoinStack>
                     <p>6000</p>
-                    <img src={coin}></img>
+                    <img src={coin} alt={coin}></img>
                 </CoinStack>
                 <p>Usuario</p>
             </Container>
