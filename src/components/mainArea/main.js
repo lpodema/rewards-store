@@ -1,12 +1,12 @@
 import { useContext, useEffect } from "react";
 import styled from "styled-components";
-import { getProducts } from "../services/services";
-import { Context } from "../store/store";
-import Footer from "./footer";
+import { getProducts } from "../../services/services";
+import { Context } from "../../store/store";
+import Footer from "../footer";
 import ProductsContainer from "./productsContainer";
-import { ChangePageButton, SortButton } from "./UI/buttons";
-import { VerticalLine } from "./UI/lines";
-import { ProductQuantity } from "./UI/other";
+import { ChangePageButton, SortButton } from "../UI/buttons";
+import { VerticalLine } from "../UI/lines";
+import { ProductQuantity } from "../UI/other";
 
 const MainStyled = styled.div`
     background-color: #f9f9f9;

@@ -1,5 +1,5 @@
-import Header from "./components/header";
-import Main from "./components/main";
+import Header from "./components/headerArea/header";
+import Main from "./components/mainArea/main";
 import styled from "styled-components";
 import Store from "./store/store";
 // import {

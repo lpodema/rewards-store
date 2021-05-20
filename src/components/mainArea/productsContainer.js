@@ -1,8 +1,7 @@
 import { useContext } from "react";
 import styled from "styled-components";
-import { Context } from "../store/store";
+import { Context } from "../../store/store";
 import Product from "./product";
-
 const ProductsDiv = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;

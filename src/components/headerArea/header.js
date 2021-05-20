@@ -1,6 +1,6 @@
 import Banner from "./banner";
 import UserInfo from "./userInfo";
-import kite from "../assets/aerolab-logo.svg";
+import kite from "../../assets/aerolab-logo.svg";
 import styled from "styled-components";
 
 const HeaderContainer = styled.div`

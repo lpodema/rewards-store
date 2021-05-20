@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
 import styled from "styled-components";
-import coin from "../assets/icons/coin.svg";
-import { getUserInfo } from "../services/services";
-import { Context } from "../store/store";
+import coin from "../../assets/icons/coin.svg";
+import { getUserInfo } from "../../services/services";
+import { Context } from "../../store/store";
 
 const InfoArea = styled.div`
     width: 100%;

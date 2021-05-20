@@ -12,9 +12,10 @@ const ProductQuantityDisplay = styled.div`
 `;
 
 export const ProductQuantity = ({ quantities, isForFooter }) => {
+    const [q1, q2] = quantities;
     return (
         <ProductQuantityDisplay isForFooter={isForFooter}>
-            {quantities}
+            {q1} of {q2} products
         </ProductQuantityDisplay>
     );
 };
