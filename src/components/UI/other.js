@@ -12,7 +12,6 @@ const ProductQuantityDisplay = styled.div`
 `;
 
 export const ProductQuantity = ({ quantities, isForFooter }) => {
-    console.log(isForFooter);
     return (
         <ProductQuantityDisplay isForFooter={isForFooter}>
             {quantities}

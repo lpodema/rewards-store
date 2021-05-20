@@ -16,7 +16,7 @@ export const getProducts = async () => {
     const response = await fetch(PRODUCTS_ENDPOINT, { method: "get", headers });
 
     if (response.status === 200) {
-        return response.body;
+        return response.json();
     } else {
         console.log("PRODUCTOS: error en el fetch");
     }

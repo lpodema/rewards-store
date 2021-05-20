@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import { Context } from "../store/store";
 import Product from "./product";
 
 const ProductsDiv = styled.div`
@@ -10,9 +12,14 @@ const ProductsDiv = styled.div`
     padding: 3rem;
 `;
 const ProductsContainer = () => {
+    const state = useContext(Context)[0];
     return (
         <ProductsDiv>
-            <Product />
+            {state.products
+                ? state.products.map((product) => (
+                      <Product product={product} key={product._id} />
+                  ))
+                : null}
         </ProductsDiv>
     );
 };

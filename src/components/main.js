@@ -1,4 +1,7 @@
+import { useContext, useEffect } from "react";
 import styled from "styled-components";
+import { getProducts } from "../services/services";
+import { Context } from "../store/store";
 import Footer from "./footer";
 import ProductsContainer from "./productsContainer";
 import { ChangePageButton, SortButton } from "./UI/buttons";
@@ -45,6 +48,16 @@ const SortBy = styled.div`
 const options = ["Most recent", "Lowest price", "Highest price"];
 
 const Main = () => {
+    const dispatch = useContext(Context)[1];
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const products = await getProducts();
+            dispatch({ type: "SET_ARTICLES", payload: products });
+        };
+        fetchData();
+    }, [dispatch]);
+
     const quantities = "16 of 32 products";
     return (
         <MainStyled>

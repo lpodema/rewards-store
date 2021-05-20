@@ -113,9 +113,11 @@ const CoinIcon = styled.img`
     margin: 2rem 2rem 2rem 0.8rem;
 `;
 
-const Product = () => {
+const Product = (props) => {
+    const { _id, img, name, cost, category } = props.product;
+
     const [hover, setHover] = useState(false);
-    const [opac, setOpac] = useState(0.5);
+    const [opac, setOpac] = useState(0);
     const [bag, setBag] = useState(bluebag);
 
     const handleMouse = () => {
@@ -129,17 +131,17 @@ const Product = () => {
             onMouseEnter={() => handleMouse()}
             onMouseLeave={() => handleMouse()}>
             <ShoppingBagStyles>
-                <img src={bag} alt={iphone8} />
+                <img src={bag} alt={bag} />
             </ShoppingBagStyles>
-            <ProductImage src={iphone8}></ProductImage>
+            <ProductImage src={img.url}></ProductImage>
             <Line />
-            <Category>Phones</Category>
-            <ArticleTitle>iPhone 8</ArticleTitle>
+            <Category>{category}</Category>
+            <ArticleTitle>{name}</ArticleTitle>
             <SelectedProductDiv opac={opac}>
                 {hover ? (
                     <div>
                         <ValueContainer>
-                            <ValueInCoins>12.000</ValueInCoins>
+                            <ValueInCoins>{cost}</ValueInCoins>
                             <CoinIcon src={coin}></CoinIcon>
                         </ValueContainer>
                         <RedeemButton>Redeem Now</RedeemButton>

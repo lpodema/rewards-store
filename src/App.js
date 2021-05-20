@@ -1,6 +1,7 @@
 import Header from "./components/header";
 import Main from "./components/main";
 import styled from "styled-components";
+import Store from "./store/store";
 // import {
 //     getProducts,
 //     addPoints,
@@ -22,9 +23,11 @@ function App() {
     // getHistory();
     // redeemProduct("5a0b36ac734d1d08bf70856c");
     return (
-        <AppStyled>
-            <Header /> <Main />
-        </AppStyled>
+        <Store>
+            <AppStyled>
+                <Header /> <Main />
+            </AppStyled>
+        </Store>
     );
 }
 
