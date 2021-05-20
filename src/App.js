@@ -1,6 +1,7 @@
 import Header from "./components/header";
 import Main from "./components/main";
 import styled from "styled-components";
+import Footer from "./components/footer";
 // import {
 //     getProducts,
 //     addPoints,

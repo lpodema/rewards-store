@@ -6,7 +6,8 @@ const ProductsDiv = styled.div`
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     /* background-color: red; */
-    background-color: #f9f9f9;
+    /* background-color: #f9f9f9; */
+    padding: 3rem;
 `;
 const ProductsContainer = () => {
     return (
