@@ -143,7 +143,7 @@ const Product = (props) => {
                             <ValueInCoins>{cost}</ValueInCoins>
                             <CoinIcon src={coin}></CoinIcon>
                         </ValueContainer>
-                        <RedeemButton>Redeem Now</RedeemButton>
+                        <RedeemButton value={_id}>Redeem Now</RedeemButton>
                     </div>
                 ) : null}
             </SelectedProductDiv>

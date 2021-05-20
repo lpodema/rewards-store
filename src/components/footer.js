@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import { Context } from "../store/store";
 import { ChangePageButton } from "./UI/buttons";
 import { Line } from "./UI/lines";
 import { ProductQuantity } from "./UI/other";
@@ -17,12 +19,24 @@ const FooterStyled = styled.div`
 `;
 
 const Footer = () => {
-    const quantities = "16 of 32 products";
+    const [state, dispatch] = useContext(Context);
+    const onClickHandler = (value) => {
+        dispatch({ type: "CHANGE_PAGE", payload: value });
+        dispatch({ type: "PAGINATE_PRODUCTS", payload: null });
+    };
+    const quantities = [state.page * state.productsToShow.length, 32];
     return (
         <div>
             <FooterStyled>
                 <ProductQuantity quantities={quantities} isForFooter={true} />
-                <ChangePageButton />
+                <ChangePageButton
+                    direction={"<"}
+                    onClickHandler={() => onClickHandler(-1)}
+                />
+                <ChangePageButton
+                    direction={">"}
+                    onClickHandler={() => onClickHandler(1)}
+                />
             </FooterStyled>
             <Line />
         </div>

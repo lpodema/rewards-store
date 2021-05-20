@@ -2,6 +2,7 @@ import { useContext } from "react";
 import styled from "styled-components";
 import { Context } from "../../store/store";
 import Product from "./product";
+
 const ProductsDiv = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -12,10 +13,12 @@ const ProductsDiv = styled.div`
 `;
 const ProductsContainer = () => {
     const state = useContext(Context)[0];
+
+    let productToShow = state.productsToShow;
     return (
         <ProductsDiv>
-            {state.products
-                ? state.products.map((product) => (
+            {productToShow
+                ? productToShow.map((product) => (
                       <Product product={product} key={product._id} />
                   ))
                 : null}

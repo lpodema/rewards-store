@@ -48,17 +48,23 @@ const SortBy = styled.div`
 const options = ["Most recent", "Lowest price", "Highest price"];
 
 const Main = () => {
-    const dispatch = useContext(Context)[1];
+    const [state, dispatch] = useContext(Context);
 
     useEffect(() => {
         const fetchData = async () => {
             const products = await getProducts();
             dispatch({ type: "SET_ARTICLES", payload: products });
+            dispatch({ type: "PAGINATE_PRODUCTS", payload: null });
         };
         fetchData();
-    }, [dispatch]);
+    }, []);
 
-    const quantities = "16 of 32 products";
+    const onClickHandler = (value) => {
+        dispatch({ type: "CHANGE_PAGE", payload: value });
+        dispatch({ type: "PAGINATE_PRODUCTS", payload: null });
+    };
+    const quantities = [state.page * state.productsToShow.length, 32];
+
     return (
         <MainStyled>
             <SortContainer>
@@ -70,7 +76,14 @@ const Main = () => {
                         return <SortButton key={index}>{option}</SortButton>;
                     })}
                 </SortOptions>
-                <ChangePageButton label={"hola"} />
+                <ChangePageButton
+                    direction={"<"}
+                    onClickHandler={() => onClickHandler(-1)}
+                />
+                <ChangePageButton
+                    direction={">"}
+                    onClickHandler={() => onClickHandler(1)}
+                />
             </SortContainer>
             <ProductsContainer />
             <Footer />

@@ -8,6 +8,9 @@ const stateShape = {
         history: null,
     },
     products: [],
+    productsToShow: [],
+    filters: [],
+    page: 1,
 };
 
 export const Context = createContext(stateShape);

@@ -23,17 +23,18 @@ const PageButton = styled.button`
 `;
 
 const ButtonContainer = styled.div`
-    width: 10%;
+    width: 5%;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 `;
 
 export const ChangePageButton = (props) => {
-    const direction = ">";
     return (
         <ButtonContainer>
-            <PageButton>{direction}</PageButton>
+            <PageButton onClick={props.onClickHandler}>
+                {props.direction}
+            </PageButton>
         </ButtonContainer>
     );
 };
