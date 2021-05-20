@@ -3,8 +3,8 @@ import Reducer from "./reducers";
 
 const stateShape = {
     user: {
-        userInfo: null,
-        userPoints: 0,
+        name: "Not Logged In",
+        points: null,
         history: null,
     },
     products: [],

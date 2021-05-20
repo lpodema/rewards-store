@@ -3,7 +3,10 @@ const Reducer = (state, action) => {
         case "LOG_USER":
             return {
                 ...state,
-                user: action.payload,
+                user: {
+                    name: action.payload.name,
+                    points: action.payload.points,
+                },
             };
         case "SET_ARTICLES":
             return {

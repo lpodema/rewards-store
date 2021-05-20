@@ -1,5 +1,8 @@
+import { useContext, useEffect } from "react";
 import styled from "styled-components";
 import coin from "../assets/icons/coin.svg";
+import { getUserInfo } from "../services/services";
+import { Context } from "../store/store";
 
 const InfoArea = styled.div`
     width: 100%;
@@ -39,14 +42,23 @@ const CoinStack = styled.div`
 `;
 
 const UserInfo = () => {
+    const [state, dispatch] = useContext(Context);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const user = await getUserInfo();
+            dispatch({ type: "LOG_USER", payload: user });
+        };
+        fetchData();
+    }, [dispatch]);
     return (
         <InfoArea>
             <Container>
                 <CoinStack>
-                    <p>6000</p>
+                    <p>{state.user.points}</p>
                     <img src={coin} alt={coin}></img>
                 </CoinStack>
-                <p>Usuario</p>
+                <p>{state.user.name}</p>
             </Container>
         </InfoArea>
     );
