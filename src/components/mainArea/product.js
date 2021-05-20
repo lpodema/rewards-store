@@ -121,7 +121,7 @@ const Product = (props) => {
 
     const handleMouse = () => {
         setHover(!hover);
-        hover ? setOpac(0) : setOpac(0.7);
+        hover ? setOpac(0) : setOpac(0.5);
         hover ? setBag(bluebag) : setBag(whitebag);
     };
 
