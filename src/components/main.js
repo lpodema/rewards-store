@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import Footer from "./footer";
 import ProductsContainer from "./productsContainer";
+import { ChangePageButton, SortButton } from "./UI/buttons";
+import { VerticalLine } from "./UI/lines";
+import { ProductQuantity } from "./UI/other";
 
 const MainStyled = styled.div`
     background-color: #f9f9f9;
@@ -20,22 +23,13 @@ const SortContainer = styled.div`
     align-content: space-between;
     margin: auto;
 `;
-export const ProductQuantityDisplay = styled.div`
-    font-family: SourceSansPro-Regular;
-    /* padding: 0; */
-    font-size: 1.2rem;
-    color: #616161;
-    letter-spacing: -0.15px;
-    line-height: 1rem;
-    text-align: left;
-    width: 25%;
-`;
+
 const SortOptions = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
     align-content: space-between;
-    width: 65%;
+    width: 70%;
 `;
 
 const SortBy = styled.div`
@@ -50,49 +44,20 @@ const SortBy = styled.div`
 `;
 const options = ["Most recent", "Lowest price", "Highest price"];
 
-export const NextPageButton = styled.button`
-    border: 1px solid #d9d9d9;
-    width: 3rem;
-    height: 3rem;
-    /* margin: 0 8rem; */
-    border-radius: 100%;
-    /* flex-grow: 1; */
-    /* align-self: flex-end; */
-`;
-
-export const ButtonContainer = styled.div`
-    width: 10%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-`;
-const SortButton = styled.button`
-    background: #ededed;
-    border-radius: 100px;
-    /* width: 33%; */
-    font-size: 1.2rem;
-    height: 100%;
-    line-height: 2rem;
-    margin: 0 1rem;
-    white-space: nowrap;
-`;
-
 const Main = () => {
+    const quantities = "16 of 32 products";
     return (
         <MainStyled>
             <SortContainer>
-                <ProductQuantityDisplay>
-                    16 of 32 products
-                </ProductQuantityDisplay>
+                <ProductQuantity quantities={quantities} isForFooter={false} />
+                <VerticalLine />
                 <SortOptions>
                     <SortBy>Sort by: </SortBy>
                     {options.map((option, index) => {
                         return <SortButton key={index}>{option}</SortButton>;
                     })}
                 </SortOptions>
-                <ButtonContainer>
-                    <NextPageButton />
-                </ButtonContainer>
+                <ChangePageButton label={"hola"} />
             </SortContainer>
             <ProductsContainer />
             <Footer />

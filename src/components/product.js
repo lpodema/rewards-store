@@ -4,6 +4,7 @@ import bluebag from "../assets/icons/buy-blue.svg";
 import whitebag from "../assets/icons/buy-white.svg";
 import coin from "../assets/icons/coin.svg";
 import { useState } from "react";
+import { Line } from "./UI/lines";
 
 const ProductDiv = styled.div`
     display: flex;
@@ -33,13 +34,6 @@ const ArticleTitle = styled.div`
     letter-spacing: -0.04px;
     text-align: left;
     margin: 0 1rem;
-`;
-
-const Line = styled.div`
-    background: #d9d9d9;
-    width: 90%;
-    height: 1px;
-    margin: auto;
 `;
 
 const ShoppingBagStyles = styled.div`

@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import { ChangePageButton } from "./UI/buttons";
+import { Line } from "./UI/lines";
+import { ProductQuantity } from "./UI/other";
 
 const FooterStyled = styled.div`
     display: flex;
@@ -22,40 +25,14 @@ const ProductQuantityDisplay = styled.div`
     text-align: left;
     width: 90%;
 `;
-const ButtonContainer = styled.div`
-    width: 10%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-`;
-
-const NextPageButton = styled.button`
-    border: 1px solid #d9d9d9;
-    width: 3rem;
-    height: 3rem;
-    /* margin: 0 8rem; */
-    border-radius: 100%;
-    /* flex-grow: 1; */
-    /* align-self: flex-end; */
-`;
-
-const Line = styled.div`
-    background: #d9d9d9;
-    width: 90%;
-    height: 1px;
-    margin: auto;
-`;
 
 const Footer = () => {
+    const quantities = "16 of 32 products";
     return (
         <div>
             <FooterStyled>
-                <ProductQuantityDisplay>
-                    16 of 32 products
-                </ProductQuantityDisplay>
-                <ButtonContainer>
-                    <NextPageButton />
-                </ButtonContainer>
+                <ProductQuantity quantities={quantities} isForFooter={true} />
+                <ChangePageButton />
             </FooterStyled>
             <Line />
         </div>
