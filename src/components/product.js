@@ -2,7 +2,6 @@ import styled from "styled-components";
 import iphone8 from "../assets/product-pics/iPhone8-x1.png";
 import bluebag from "../assets/icons/buy-blue.svg";
 import whitebag from "../assets/icons/buy-white.svg";
-import "./special.css";
 import coin from "../assets/icons/coin.svg";
 import { useState } from "react";
 
