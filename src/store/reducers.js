@@ -54,8 +54,8 @@ const Reducer = (state, action) => {
         case "APPLY_FILTER_COST":
             console.log("filtro de rango de precio", action.minMax);
             const [min, max] = action.minMax;
-            const prods = action.payload;
-            const newProds = prods.filter(
+            // const prods = action.payload;
+            const newProds = action.payload.filter(
                 (product) => product.cost >= min && product.cost <= max
             );
             // console.log(newProds);
@@ -63,6 +63,20 @@ const Reducer = (state, action) => {
                 ...state,
                 range: [min, max],
                 productsFiltered: newProds,
+            };
+
+        case "APPLY_CATEGORY_FILTERS":
+            const categories = action.categories;
+            // console.log("CATEGORIAS", categories);
+
+            const filteredProds = action.payload.filter((product) =>
+                categories.includes(product.category)
+            );
+
+            return {
+                ...state,
+                filters: categories,
+                productsFiltered: filteredProds,
             };
 
         // case "APPLY_ALL_FILTERS":

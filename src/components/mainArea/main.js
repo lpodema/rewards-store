@@ -121,11 +121,31 @@ const Main = () => {
     const handleChangeMultiple = async (event) => {
         const { options } = event.target;
         const value = [];
-        for (let i = 0, l = options.length; i < l; i += 1) {
-            if (options[i].selected) {
-                value.push(options[i].value);
+        // console.log(options);
+        for (const opt of options) {
+            if (opt.selected) {
+                value.push(opt.value);
             }
         }
+        // console.log(value);
+        // const value = options.map((opt) => opt.selected);
+        // console.log(value);
+        // for (let i = 0, l = options.length; i < l; i += 1) {
+        //     if (options[i].selected) {
+        //         value.push(options[i].value);
+        //     }
+        // }
+        console.log(state);
+        dispatch({
+            type: "APPLY_CATEGORY_FILTERS",
+            payload: state.products,
+            categories: value,
+        });
+        dispatch({
+            type: "PAGINATE_PRODUCTS",
+            payload: state.productsFiltered,
+        });
+        console.log(state);
         setFilter(value);
     };
 
