@@ -9,10 +9,11 @@ const Reducer = (state, action) => {
                 },
             };
         case "SET_ARTICLES":
-            console.log("SET ARTICLES");
+            // console.log("SET ARTICLES");
             return {
                 ...state,
                 products: action.payload,
+                productsFiltered: action.payload,
             };
         case "ADD_POINTS":
             return {
@@ -30,7 +31,7 @@ const Reducer = (state, action) => {
             const addPage = parseInt(action.payload);
             if (
                 prevPage + addPage <= 0 ||
-                (prevPage + addPage) * 16 > state.products.length
+                (prevPage + addPage) * 16 > state.productsFiltered.length
             ) {
                 return { ...state };
             } else {
@@ -41,13 +42,31 @@ const Reducer = (state, action) => {
             }
 
         case "PAGINATE_PRODUCTS":
-            console.log("paginando cosas");
+            // console.log("paginando cosas");
             const begin = (state.page - 1) * 16;
             const end = begin + 16;
+            console.log(action.payload);
             return {
                 ...state,
-                productsToShow: state.products.slice(begin, end),
+                productsToShow: action.payload.slice(begin, end),
             };
+
+        case "APPLY_FILTER_COST":
+            console.log("filtro de rango de precio", action.minMax);
+            const [min, max] = action.minMax;
+            const prods = action.payload;
+            const newProds = prods.filter(
+                (product) => product.cost >= min && product.cost <= max
+            );
+            // console.log(newProds);
+            return {
+                ...state,
+                range: [min, max],
+                productsFiltered: newProds,
+            };
+
+        // case "APPLY_ALL_FILTERS":
+        //     const newProds = state.products.filter()
 
         // case "CHANGE_ARTICLES_TO_SHOW":
         //     const products = state.products

@@ -22,7 +22,20 @@ const Footer = () => {
     const [state, dispatch] = useContext(Context);
     const onClickHandler = (value) => {
         dispatch({ type: "CHANGE_PAGE", payload: value });
-        dispatch({ type: "PAGINATE_PRODUCTS", payload: null });
+        if (
+            state.range[0] === 50 &&
+            state.range[1] === 2500 &&
+            state.filters.length === 0
+        ) {
+            console.log("if 81");
+            dispatch({ type: "PAGINATE_PRODUCTS", payload: state.products });
+        } else {
+            console.log("else 83");
+            dispatch({
+                type: "PAGINATE_PRODUCTS",
+                payload: state.productsToShow,
+            });
+        }
     };
     const quantities = [state.page * state.productsToShow.length, 32];
     return (
