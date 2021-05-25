@@ -21,23 +21,9 @@ const FooterStyled = styled.div`
 const Footer = () => {
     const [state, dispatch] = useContext(Context);
     const onClickHandler = (value) => {
-        dispatch({ type: "CHANGE_PAGE", payload: value });
-        if (
-            state.range[0] === 50 &&
-            state.range[1] === 2500 &&
-            state.filters.length === 0
-        ) {
-            console.log("if 81");
-            dispatch({ type: "PAGINATE_PRODUCTS", payload: state.products });
-        } else {
-            console.log("else 83");
-            dispatch({
-                type: "PAGINATE_PRODUCTS",
-                payload: state.productsToShow,
-            });
-        }
+        dispatch({ type: "CHANGE_PAGE", payload: value, page: state.page });
     };
-    const quantities = [state.page * state.productsToShow.length, 32];
+    const quantities = [state.productsToShow.length, 32];
     return (
         <div>
             <FooterStyled>
@@ -45,10 +31,18 @@ const Footer = () => {
                 <ChangePageButton
                     direction={"<"}
                     onClickHandler={() => onClickHandler(-1)}
+                    disabled={
+                        state.page === 1 || state.productsFiltered.length < 16
+                    }
                 />
                 <ChangePageButton
                     direction={">"}
                     onClickHandler={() => onClickHandler(1)}
+                    disabled={
+                        state.page * 16 >= state.productsFiltered.length
+                            ? true
+                            : false
+                    }
                 />
             </FooterStyled>
             <Line />

@@ -28,123 +28,72 @@ const SortContainer = styled.div`
     margin: auto;
 `;
 
-const SortOptions = styled.div`
+const FilterOptions = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
     align-content: space-between;
     width: 70%;
 `;
-/*
-const SortBy = styled.div`
-    font-family: SourceSansPro-Regular;
-    font-size: 1.2rem;
-    color: #a3a3a3;
-    letter-spacing: -0.15px;
-    line-height: 2rem;
-    text-align: left;
-    white-space: nowrap;
-`;
-*/
-//const options = ["Most recent", "Lowest price", "Highest price"];
 
 const Main = () => {
     const [state, dispatch] = useContext(Context);
     const [range, setRange] = useState([50, 2500]);
     const [filter, setFilter] = useState([]);
-    // console.log(range);
-
     useEffect(() => {
         const fetchData = async () => {
             const products = await getProducts();
             dispatch({ type: "SET_ARTICLES", payload: products });
-            dispatch({ type: "PAGINATE_PRODUCTS", payload: products });
         };
         fetchData();
-    }, []);
+    }, [dispatch]);
+
+    useEffect(() => {
+        dispatch({
+            type: "APPLY_FILTERS",
+            payload: state.products,
+            minMax: range,
+            categories: filter,
+        });
+    }, [range, filter]);
+
+    useEffect(() => {
+        dispatch({
+            type: "PAGINATE_PRODUCTS",
+            payload: state.productsFiltered,
+            page: state.page,
+        });
+        if (state.page) {
+            dispatch({ type: "CHANGE_PAGE", payload: 0, page: 1 });
+        }
+    }, [state.productsFiltered, state.page]);
 
     const sorted = [
         ...state.products.map((product) => product.cost).sort((a, b) => a - b),
     ];
-    // console.log(sorted);
     const minMax = [sorted[0], sorted[sorted.length - 1]];
 
     const onClickHandler = (value) => {
-        dispatch({ type: "CHANGE_PAGE", payload: value });
-        console.log(state.range, minMax);
-        if (
-            state.range[0] === minMax[0] &&
-            state.range[1] === minMax[1] &&
-            state.filters.length === 0
-        ) {
-            console.log("if 81");
-            dispatch({ type: "PAGINATE_PRODUCTS", payload: state.products });
-        } else {
-            console.log("else 83");
-            dispatch({
-                type: "PAGINATE_PRODUCTS",
-                payload: state.productsToShow,
-            });
-        }
+        dispatch({ type: "CHANGE_PAGE", payload: value, page: state.page });
     };
-    const quantities = [state.page * state.productsToShow.length, 32];
+    const quantities = [state.productsToShow.length, 32];
 
     const categories = [
         ...new Set(state.products.map((product) => product.category)),
     ];
 
-    // console.log(minMax);
-    // const onChangeHandlerSelect = (e) => {
-    //     let value = Array.from(
-    //         e.target.selectedOptions,
-    //         (option) => option.value
-    //     );
-    //     setFilter(value);
-    //     console.log(filter);
-    // };
-
     const onChangeHandlerRange = (event, value) => {
-        // console.log(value);
-        // setRange(value);
-        dispatch({
-            type: "APPLY_FILTER_COST",
-            payload: state.products,
-            minMax: value,
-        });
-        dispatch({
-            type: "PAGINATE_PRODUCTS",
-            payload: state.productsFiltered,
-        });
         setRange(value);
     };
 
     const handleChangeMultiple = async (event) => {
         const { options } = event.target;
         const value = [];
-        // console.log(options);
         for (const opt of options) {
             if (opt.selected) {
                 value.push(opt.value);
             }
         }
-        // console.log(value);
-        // const value = options.map((opt) => opt.selected);
-        // console.log(value);
-        // for (let i = 0, l = options.length; i < l; i += 1) {
-        //     if (options[i].selected) {
-        //         value.push(options[i].value);
-        //     }
-        // }
-        console.log(state);
-        dispatch({
-            type: "APPLY_CATEGORY_FILTERS",
-            payload: state.products,
-            categories: value,
-        });
-        dispatch({
-            type: "PAGINATE_PRODUCTS",
-            payload: state.productsFiltered,
-        });
         console.log(state);
         setFilter(value);
     };
@@ -154,7 +103,7 @@ const Main = () => {
             <SortContainer>
                 <ProductQuantity quantities={quantities} isForFooter={false} />
                 <VerticalLine />
-                <SortOptions>
+                <FilterOptions>
                     {/* <SortBy>Sort by: </SortBy>
                     {options.map((option, index) => {
                         return <SortButton key={index}>{option}</SortButton>;
@@ -172,14 +121,22 @@ const Main = () => {
                         val={filter}
                         onChangeHandler={handleChangeMultiple}
                     />
-                </SortOptions>
+                </FilterOptions>
                 <ChangePageButton
                     direction={"<"}
                     onClickHandler={() => onClickHandler(-1)}
+                    disabled={
+                        state.page === 1 || state.productsFiltered.length < 16
+                    }
                 />
                 <ChangePageButton
                     direction={">"}
                     onClickHandler={() => onClickHandler(1)}
+                    disabled={
+                        state.page * 16 >= state.productsFiltered.length
+                            ? true
+                            : false
+                    }
                 />
             </SortContainer>
             <ProductsContainer />

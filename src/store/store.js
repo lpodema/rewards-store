@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from "react";
 import Reducer from "./reducers";
 
-const newState = {
+const initialState = {
     user: {
         name: "Not Logged In",
         points: null,
@@ -15,10 +15,10 @@ const newState = {
     page: 1,
 };
 
-export const Context = createContext(newState);
+export const Context = createContext(initialState);
 
 const Store = ({ children }) => {
-    const [state, dispatch] = useReducer(Reducer, newState);
+    const [state, dispatch] = useReducer(Reducer, initialState);
     return (
         <Context.Provider value={[state, dispatch]}>
             {children}

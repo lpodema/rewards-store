@@ -32,7 +32,9 @@ const ButtonContainer = styled.div`
 export const ChangePageButton = (props) => {
     return (
         <ButtonContainer>
-            <PageButton onClick={props.onClickHandler}>
+            <PageButton
+                onClick={props.onClickHandler}
+                disabled={props.disabled}>
                 {props.direction}
             </PageButton>
         </ButtonContainer>

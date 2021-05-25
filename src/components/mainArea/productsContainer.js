@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useEffect } from "react";
 import { useContext } from "react";
 import styled from "styled-components";
 import { Context } from "../../store/store";
@@ -12,13 +14,12 @@ const ProductsDiv = styled.div`
     padding: 3rem;
 `;
 const ProductsContainer = () => {
-    const state = useContext(Context)[0];
+    const { productsToShow } = useContext(Context)[0];
 
-    let productToShow = state.productsToShow;
     return (
         <ProductsDiv>
-            {productToShow
-                ? productToShow.map((product) => (
+            {productsToShow
+                ? productsToShow.map((product) => (
                       <Product product={product} key={product._id} />
                   ))
                 : null}
