@@ -55,10 +55,10 @@ const UserInfo = () => {
         <InfoArea>
             <Container>
                 <CoinStack>
-                    <p>{state.user.points}</p>
+                    <p>{state.user ? state.user.points : null}</p>
                     <img src={coin} alt={coin}></img>
                 </CoinStack>
-                <p>{state.user.name}</p>
+                <p>{state.user ? state.user.name : "Not logged in"}</p>
             </Container>
         </InfoArea>
     );

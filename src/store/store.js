@@ -2,11 +2,7 @@ import React, { createContext, useReducer } from "react";
 import Reducer from "./reducers";
 
 const initialState = {
-    user: {
-        name: "Not Logged In",
-        points: null,
-        history: null,
-    },
+    user: null,
     products: [],
     productsToShow: [],
     productsFiltered: [],

@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { Context } from "../../store/store";
 import styled from "styled-components";
 import bluebag from "../../assets/icons/buy-blue.svg";
 import whitebag from "../../assets/icons/buy-white.svg";
@@ -111,9 +113,48 @@ const CoinIcon = styled.img`
     width: 10%;
     margin: 2rem 2rem 2rem 0.8rem;
 `;
+const CoinIcon2 = styled.img`
+    /* height: 10%; */
+    width: 18%;
+    margin: 0 0.3rem;
+`;
+
+const NotEnoughCoins = styled.div`
+    letter-spacing: -0.5px;
+    color: white;
+    font-size: 0.9rem;
+    text-align: center;
+    width: 50%;
+    border-radius: 15px;
+    background-color: rgba(128, 128, 128, 0.7);
+    position: absolute;
+    white-space: nowrap;
+    padding: 0 0.9rem;
+    top: 0rem;
+    right: 0rem;
+    z-index: 90;
+    display: flex;
+    flex-direction: row;
+    vertical-align: center;
+`;
+
+const NotEnoughContainer = styled.div`
+    letter-spacing: -0.08px;
+    text-align: center;
+    position: absolute;
+    margin: 0 auto;
+    /* top: 35%; */
+    /* right: 0%; */
+    /* width: 100%; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 auto;
+`;
 
 const Product = (props) => {
     const { _id, img, name, cost, category } = props.product;
+    const { user } = useContext(Context)[0];
 
     const [hover, setHover] = useState(false);
     const [opac, setOpac] = useState(0);
@@ -125,13 +166,26 @@ const Product = (props) => {
         hover ? setBag(bluebag) : setBag(whitebag);
     };
 
+    console.log(user);
     return (
         <ProductDiv
             onMouseEnter={() => handleMouse()}
             onMouseLeave={() => handleMouse()}>
-            <ShoppingBagStyles>
-                <img src={bag} alt={bag} />
-            </ShoppingBagStyles>
+            {user !== null && user.points < cost ? (
+                <>
+                    <NotEnoughCoins>
+                        {/* <NotEnoughCoins> */}
+                        <p>Te faltan {user.points - cost}</p>
+                        <CoinIcon2 src={coin} />
+                        {/* </NotEnoughCoins> */}
+                    </NotEnoughCoins>
+                </>
+            ) : (
+                <ShoppingBagStyles>
+                    <img src={bag} alt={bag} />
+                </ShoppingBagStyles>
+            )}
+
             <ProductImage src={img.url}></ProductImage>
             <Line />
             <Category>{category}</Category>

@@ -25,7 +25,6 @@ const Reducer = (state, action) => {
                 error: action.payload,
             };
         case "CHANGE_PAGE":
-            console.log("CHANGE PAGE");
             const prevPage = parseInt(state.page);
             const addPage = parseInt(action.payload);
             if (prevPage + addPage <= 0) {
@@ -38,7 +37,6 @@ const Reducer = (state, action) => {
             }
 
         case "PAGINATE_PRODUCTS":
-            console.log(action.page, action.payload);
             let begin = 0;
             if (action.payload.length > 16) {
                 begin = (action.page - 1) * 16;
@@ -52,7 +50,6 @@ const Reducer = (state, action) => {
 
         case "APPLY_FILTERS":
             const [min, max] = action.minMax;
-            console.log(action.minMax, action.categories);
             let products = action.payload.filter(
                 (product) => product.cost >= min && product.cost <= max
             );

@@ -94,7 +94,6 @@ const Main = () => {
                 value.push(opt.value);
             }
         }
-        console.log(state);
         setFilter(value);
     };
 
