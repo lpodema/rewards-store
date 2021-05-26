@@ -59,10 +59,10 @@ const UserInfo = () => {
 
     const onClickHandler = async (number) => {
         const points = await addPoints(number);
-        // console.log(points);
         dispatch({ type: ADD_POINTS, payload: points["New Points"] });
         setModal(false);
     };
+
     return (
         <InfoArea>
             <Container>

@@ -74,19 +74,9 @@ const Main = () => {
         }
     }, [state.productsFiltered, state.page, dispatch]);
 
-    const sorted = [
-        ...state.products.map((product) => product.cost).sort((a, b) => a - b),
-    ];
-    const minMax = [sorted[0], sorted[sorted.length - 1]];
-
     const onClickHandler = (value) => {
         dispatch({ type: CHANGE_PAGE, payload: value, page: state.page });
     };
-    const quantities = [state.productsToShow.length, 32];
-
-    const categories = [
-        ...new Set(state.products.map((product) => product.category)),
-    ];
 
     const onChangeHandlerRange = (event, value) => {
         setRange(value);
@@ -102,6 +92,16 @@ const Main = () => {
         }
         setFilter(value);
     };
+
+    const sorted = [
+        ...state.products.map((product) => product.cost).sort((a, b) => a - b),
+    ];
+    const minMax = [sorted[0], sorted[sorted.length - 1]];
+    const quantities = [state.productsToShow.length, state.products.length];
+
+    const categories = [
+        ...new Set(state.products.map((product) => product.category)),
+    ];
 
     return (
         <MainStyled>

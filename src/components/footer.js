@@ -4,6 +4,7 @@ import { Context } from "../store/store";
 import { ChangePageButton } from "./UI/buttons";
 import { Line } from "./UI/lines";
 import { ProductQuantity } from "./UI/other";
+import { CHANGE_PAGE } from "../utils/constants";
 
 const FooterStyled = styled.div`
     display: flex;
@@ -21,9 +22,9 @@ const FooterStyled = styled.div`
 const Footer = () => {
     const [state, dispatch] = useContext(Context);
     const onClickHandler = (value) => {
-        dispatch({ type: "CHANGE_PAGE", payload: value, page: state.page });
+        dispatch({ type: CHANGE_PAGE, payload: value, page: state.page });
     };
-    const quantities = [state.productsToShow.length, 32];
+    const quantities = [state.productsToShow.length, state.products.length];
     return (
         <div>
             <FooterStyled>
