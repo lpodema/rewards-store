@@ -8,6 +8,12 @@ import { ChangePageButton } from "../UI/buttons";
 import { VerticalLine } from "../UI/lines";
 import { ProductQuantity } from "../UI/other";
 import { RangeSlider, SelectComponent } from "../UI/filters";
+import {
+    APPLY_FILTERS,
+    SET_ARTICLES,
+    PAGINATE_PRODUCTS,
+    CHANGE_PAGE,
+} from "../../utils/constants";
 
 const MainStyled = styled.div`
     background-color: #f9f9f9;
@@ -43,14 +49,14 @@ const Main = () => {
     useEffect(() => {
         const fetchData = async () => {
             const products = await getProducts();
-            dispatch({ type: "SET_ARTICLES", payload: products });
+            dispatch({ type: SET_ARTICLES, payload: products });
         };
         fetchData();
     }, [dispatch]);
 
     useEffect(() => {
         dispatch({
-            type: "APPLY_FILTERS",
+            type: APPLY_FILTERS,
             payload: state.products,
             minMax: range,
             categories: filter,
@@ -59,12 +65,12 @@ const Main = () => {
 
     useEffect(() => {
         dispatch({
-            type: "PAGINATE_PRODUCTS",
+            type: PAGINATE_PRODUCTS,
             payload: state.productsFiltered,
             page: state.page,
         });
         if (state.page) {
-            dispatch({ type: "CHANGE_PAGE", payload: 0, page: 1 });
+            dispatch({ type: CHANGE_PAGE, payload: 0, page: 1 });
         }
     }, [state.productsFiltered, state.page, dispatch]);
 
@@ -74,7 +80,7 @@ const Main = () => {
     const minMax = [sorted[0], sorted[sorted.length - 1]];
 
     const onClickHandler = (value) => {
-        dispatch({ type: "CHANGE_PAGE", payload: value, page: state.page });
+        dispatch({ type: CHANGE_PAGE, payload: value, page: state.page });
     };
     const quantities = [state.productsToShow.length, 32];
 

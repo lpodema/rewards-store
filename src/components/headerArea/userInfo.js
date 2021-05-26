@@ -5,6 +5,7 @@ import { getUserInfo } from "../../services/services";
 import { Context } from "../../store/store";
 import { addPoints } from "../../services/services";
 import Modal from "./addPointsModal";
+import { ADD_POINTS, LOG_USER } from "../../utils/constants";
 
 const InfoArea = styled.div`
     width: 100%;
@@ -51,7 +52,7 @@ const UserInfo = () => {
     useEffect(() => {
         const fetchData = async () => {
             const user = await getUserInfo();
-            dispatch({ type: "LOG_USER", payload: user });
+            dispatch({ type: LOG_USER, payload: user });
         };
         fetchData();
     }, [dispatch]);
@@ -59,7 +60,7 @@ const UserInfo = () => {
     const onClickHandler = async (number) => {
         const points = await addPoints(number);
         // console.log(points);
-        dispatch({ type: "ADD_POINTS", payload: points["New Points"] });
+        dispatch({ type: ADD_POINTS, payload: points["New Points"] });
         setModal(false);
     };
     return (

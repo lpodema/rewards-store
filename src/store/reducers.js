@@ -1,6 +1,15 @@
+import {
+    LOG_USER,
+    SET_ARTICLES,
+    ADD_POINTS,
+    CHANGE_PAGE,
+    PAGINATE_PRODUCTS,
+    APPLY_FILTERS,
+} from "../utils/constants";
+
 const Reducer = (state, action) => {
     switch (action.type) {
-        case "LOG_USER":
+        case LOG_USER:
             return {
                 ...state,
                 user: {
@@ -8,13 +17,13 @@ const Reducer = (state, action) => {
                     points: action.payload.points,
                 },
             };
-        case "SET_ARTICLES":
+        case SET_ARTICLES:
             return {
                 ...state,
                 products: action.payload,
                 productsFiltered: action.payload,
             };
-        case "ADD_POINTS":
+        case ADD_POINTS:
             const name = state.user.name;
             return {
                 ...state,
@@ -25,7 +34,7 @@ const Reducer = (state, action) => {
         //         ...state,
         //         error: action.payload,
         //     };
-        case "CHANGE_PAGE":
+        case CHANGE_PAGE:
             const prevPage = parseInt(state.page);
             const addPage = parseInt(action.payload);
             if (prevPage + addPage <= 0) {
@@ -37,7 +46,7 @@ const Reducer = (state, action) => {
                 };
             }
 
-        case "PAGINATE_PRODUCTS":
+        case PAGINATE_PRODUCTS:
             let begin = 0;
             if (action.payload.length > 16) {
                 begin = (action.page - 1) * 16;
@@ -49,7 +58,7 @@ const Reducer = (state, action) => {
                 productsToShow: action.payload.slice(begin, end),
             };
 
-        case "APPLY_FILTERS":
+        case APPLY_FILTERS:
             const [min, max] = action.minMax;
             let products = action.payload.filter(
                 (product) => product.cost >= min && product.cost <= max
