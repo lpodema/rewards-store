@@ -138,19 +138,19 @@ const NotEnoughCoins = styled.div`
     vertical-align: center;
 `;
 
-const NotEnoughContainer = styled.div`
-    letter-spacing: -0.08px;
-    text-align: center;
-    position: absolute;
-    margin: 0 auto;
-    /* top: 35%; */
-    /* right: 0%; */
-    /* width: 100%; */
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0 auto;
-`;
+// const NotEnoughContainer = styled.div`
+//     letter-spacing: -0.08px;
+//     text-align: center;
+//     position: absolute;
+//     margin: 0 auto;
+//     top: 35%;
+//     right: 0%;
+//     width: 100%;
+//     display: flex;
+//     flex-direction: row;
+//     align-items: center;
+//     padding: 0 auto;
+// `;
 
 const Product = (props) => {
     const { _id, img, name, cost, category } = props.product;
@@ -166,7 +166,6 @@ const Product = (props) => {
         hover ? setBag(bluebag) : setBag(whitebag);
     };
 
-    console.log(user);
     return (
         <ProductDiv
             onMouseEnter={() => handleMouse()}

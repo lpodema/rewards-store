@@ -42,7 +42,8 @@ export const addPoints = async (amount) => {
     });
 
     if (response.status === 200) {
-        return response.body;
+        const content = await response.json();
+        return content;
     } else {
         console.log("ADD_POINTS: error en el fetch");
     }

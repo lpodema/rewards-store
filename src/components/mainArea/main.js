@@ -4,7 +4,7 @@ import { getProducts } from "../../services/services";
 import { Context } from "../../store/store";
 import Footer from "../footer";
 import ProductsContainer from "./productsContainer";
-import { ChangePageButton, SortButton } from "../UI/buttons";
+import { ChangePageButton } from "../UI/buttons";
 import { VerticalLine } from "../UI/lines";
 import { ProductQuantity } from "../UI/other";
 import { RangeSlider, SelectComponent } from "../UI/filters";
@@ -55,7 +55,7 @@ const Main = () => {
             minMax: range,
             categories: filter,
         });
-    }, [range, filter]);
+    }, [range, filter, state.products, dispatch]);
 
     useEffect(() => {
         dispatch({
@@ -66,7 +66,7 @@ const Main = () => {
         if (state.page) {
             dispatch({ type: "CHANGE_PAGE", payload: 0, page: 1 });
         }
-    }, [state.productsFiltered, state.page]);
+    }, [state.productsFiltered, state.page, dispatch]);
 
     const sorted = [
         ...state.products.map((product) => product.cost).sort((a, b) => a - b),

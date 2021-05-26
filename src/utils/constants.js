@@ -11,3 +11,9 @@ export const ADD_POINTS_ENDPOINT = `${BASE_URL}/user/points`;
 export const REDEEM_HISTORY_ENDPOINT = `${BASE_URL}/user/history`;
 
 export const REDEEM_PRODUCT = `${BASE_URL}/redeem`;
+
+export const POINTS_BUTTONS = [
+    { text: "1000", value: 1000 },
+    { text: "5000", value: 5000 },
+    { text: "7500", value: 7500 },
+];

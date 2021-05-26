@@ -15,15 +15,16 @@ const Reducer = (state, action) => {
                 productsFiltered: action.payload,
             };
         case "ADD_POINTS":
+            const name = state.user.name;
             return {
                 ...state,
-                user: action.payload,
+                user: { name, points: action.payload },
             };
-        case "SET_ERROR":
-            return {
-                ...state,
-                error: action.payload,
-            };
+        // case "SET_ERROR":
+        //     return {
+        //         ...state,
+        //         error: action.payload,
+        //     };
         case "CHANGE_PAGE":
             const prevPage = parseInt(state.page);
             const addPage = parseInt(action.payload);

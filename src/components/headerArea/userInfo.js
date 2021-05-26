@@ -1,8 +1,10 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import coin from "../../assets/icons/coin.svg";
 import { getUserInfo } from "../../services/services";
 import { Context } from "../../store/store";
+import { addPoints } from "../../services/services";
+import Modal from "./addPointsModal";
 
 const InfoArea = styled.div`
     width: 100%;
@@ -10,6 +12,7 @@ const InfoArea = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    position: relative;
     /* background-color: green; */
 `;
 
@@ -44,6 +47,7 @@ const CoinStack = styled.div`
 const UserInfo = () => {
     const [state, dispatch] = useContext(Context);
 
+    const [modal, setModal] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
             const user = await getUserInfo();
@@ -51,15 +55,28 @@ const UserInfo = () => {
         };
         fetchData();
     }, [dispatch]);
+
+    const onClickHandler = async (number) => {
+        const points = await addPoints(number);
+        // console.log(points);
+        dispatch({ type: "ADD_POINTS", payload: points["New Points"] });
+        setModal(false);
+    };
     return (
         <InfoArea>
             <Container>
                 <CoinStack>
                     <p>{state.user ? state.user.points : null}</p>
-                    <img src={coin} alt={coin}></img>
+                    <img
+                        src={coin}
+                        alt={coin}
+                        onClick={() => setModal(!modal)}></img>
                 </CoinStack>
                 <p>{state.user ? state.user.name : "Not logged in"}</p>
             </Container>
+            {modal ? (
+                <Modal setModal={setModal} onClickHandler={onClickHandler} />
+            ) : null}
         </InfoArea>
     );
 };

@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useEffect } from "react";
 import { useContext } from "react";
 import styled from "styled-components";
 import { Context } from "../../store/store";
