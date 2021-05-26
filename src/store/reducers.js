@@ -1,10 +1,13 @@
 import {
     LOG_USER,
-    SET_ARTICLES,
-    ADD_POINTS,
+    SET_PRODUCTS,
+    UPDATE_POINTS,
     CHANGE_PAGE,
     PAGINATE_PRODUCTS,
     APPLY_FILTERS,
+    REDEEM_PROD,
+    UPDATE_HISTORY,
+    SET_ERROR,
 } from "../utils/constants";
 
 const Reducer = (state, action) => {
@@ -17,23 +20,24 @@ const Reducer = (state, action) => {
                     points: action.payload.points,
                 },
             };
-        case SET_ARTICLES:
+        case SET_PRODUCTS:
             return {
                 ...state,
                 products: action.payload,
                 productsFiltered: action.payload,
             };
-        case ADD_POINTS:
+        case UPDATE_POINTS:
             const name = state.user.name;
             return {
                 ...state,
                 user: { name, points: action.payload },
             };
-        // case "SET_ERROR":
-        //     return {
-        //         ...state,
-        //         error: action.payload,
-        //     };
+        case SET_ERROR:
+            console.log("ERROR: ", action.payload);
+            return {
+                ...state,
+                error: action.payload,
+            };
         case CHANGE_PAGE:
             const prevPage = parseInt(state.page);
             const addPage = parseInt(action.payload);
@@ -72,6 +76,16 @@ const Reducer = (state, action) => {
             return {
                 ...state,
                 productsFiltered: products,
+            };
+
+        case REDEEM_PROD:
+            return {
+                ...state,
+            };
+        case UPDATE_HISTORY:
+            return {
+                ...state,
+                history: action.payload,
             };
 
         default:

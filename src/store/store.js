@@ -9,6 +9,7 @@ const initialState = {
     filters: [],
     range: [50, 2500],
     page: 1,
+    history: [],
 };
 
 export const Context = createContext(initialState);

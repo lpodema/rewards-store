@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { getProducts } from "../../services/services";
+import { getProducts, redeemProduct } from "../../services/services";
 import { Context } from "../../store/store";
 import Footer from "../footer";
 import ProductsContainer from "./productsContainer";
@@ -10,7 +10,7 @@ import { ProductQuantity } from "../UI/other";
 import { RangeSlider, SelectComponent } from "../UI/filters";
 import {
     APPLY_FILTERS,
-    SET_ARTICLES,
+    SET_PRODUCTS,
     PAGINATE_PRODUCTS,
     CHANGE_PAGE,
 } from "../../utils/constants";
@@ -46,10 +46,11 @@ const Main = () => {
     const [state, dispatch] = useContext(Context);
     const [range, setRange] = useState([50, 2500]);
     const [filter, setFilter] = useState([]);
+
     useEffect(() => {
         const fetchData = async () => {
             const products = await getProducts();
-            dispatch({ type: SET_ARTICLES, payload: products });
+            dispatch({ type: SET_PRODUCTS, payload: products });
         };
         fetchData();
     }, [dispatch]);

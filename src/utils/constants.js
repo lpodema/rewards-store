@@ -19,8 +19,11 @@ export const POINTS_BUTTONS = [
 ];
 
 export const LOG_USER = "LOG_USER";
-export const SET_ARTICLES = "SET_ARTICLES";
-export const ADD_POINTS = "ADD_POINTS";
+export const SET_PRODUCTS = "SET_PRODUCTS";
+export const SET_ERROR = "SET_ERROR";
+export const UPDATE_POINTS = "UPDATE_POINTS";
 export const CHANGE_PAGE = "CHANGE_PAGE";
 export const PAGINATE_PRODUCTS = "PAGINATE_PRODUCTS";
 export const APPLY_FILTERS = "APPLY_FILTERS";
+export const REDEEM_PROD = "REDEEM_PROD";
+export const UPDATE_HISTORY = "UPDATE_HISTORY";

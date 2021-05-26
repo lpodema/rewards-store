@@ -6,6 +6,8 @@ import whitebag from "../../assets/icons/buy-white.svg";
 import coin from "../../assets/icons/coin.svg";
 import { useState } from "react";
 import { Line } from "../UI/lines";
+import { redeemProduct } from "../../services/services";
+import { REDEEM_PROD, SET_ERROR, UPDATE_POINTS } from "../../utils/constants";
 
 const ProductDiv = styled.div`
     display: flex;
@@ -155,6 +157,7 @@ const NotEnoughCoins = styled.div`
 const Product = (props) => {
     const { _id, img, name, cost, category } = props.product;
     const { user } = useContext(Context)[0];
+    const dispatch = useContext(Context)[1];
 
     const [hover, setHover] = useState(false);
     const [opac, setOpac] = useState(0);
@@ -164,6 +167,20 @@ const Product = (props) => {
         setHover(!hover);
         hover ? setOpac(0) : setOpac(0.5);
         hover ? setBag(bluebag) : setBag(whitebag);
+    };
+
+    const handleRedeem = async (value) => {
+        const result = await redeemProduct(value);
+        console.log(result);
+        if (result) {
+            dispatch({ type: REDEEM_PROD });
+            dispatch({ type: UPDATE_POINTS, payload: user.points - cost });
+        } else {
+            dispatch({
+                type: SET_ERROR,
+                payload: "Error en la compra del producto",
+            });
+        }
     };
 
     return (
@@ -196,7 +213,11 @@ const Product = (props) => {
                             <ValueInCoins>{cost}</ValueInCoins>
                             <CoinIcon src={coin}></CoinIcon>
                         </ValueContainer>
-                        <RedeemButton value={_id}>Redeem Now</RedeemButton>
+                        <RedeemButton
+                            value={_id}
+                            onClick={() => handleRedeem(_id)}>
+                            Redeem Now
+                        </RedeemButton>
                     </div>
                 ) : null}
             </SelectedProductDiv>
