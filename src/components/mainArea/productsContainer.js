@@ -1,3 +1,4 @@
+import { Grid } from "@material-ui/core";
 import { useContext } from "react";
 import styled from "styled-components";
 import { Context } from "../../store/store";
@@ -15,13 +16,15 @@ const ProductsContainer = () => {
     const { productsToShow } = useContext(Context)[0];
 
     return (
-        <ProductsDiv>
+        <Grid container alignItems='center' justify='space-evenly'>
             {productsToShow
                 ? productsToShow.map((product) => (
-                      <Product product={product} key={product._id} />
+                      <Grid item key={product._id} lg={3}>
+                          <Product product={product} />
+                      </Grid>
                   ))
                 : null}
-        </ProductsDiv>
+        </Grid>
     );
 };
 

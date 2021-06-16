@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Line = styled.div`
     background: #d9d9d9;
-    width: 90%;
+    /* width: 100%; */
     height: 1px;
     margin: auto;
 `;

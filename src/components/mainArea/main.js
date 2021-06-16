@@ -5,21 +5,36 @@ import { Context } from "../../store/store";
 import Footer from "../footer";
 import ProductsContainer from "./productsContainer";
 import { ChangePageButton } from "../UI/buttons";
-import { VerticalLine } from "../UI/lines";
+import { Line, VerticalLine } from "../UI/lines";
 import { ProductQuantity } from "../UI/other";
 import { RangeSlider, SelectComponent } from "../UI/filters";
+import { Icon } from "@material-ui/core";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
+
 import {
     APPLY_FILTERS,
     SET_PRODUCTS,
     PAGINATE_PRODUCTS,
     CHANGE_PAGE,
 } from "../../utils/constants";
+import {
+    Chip,
+    IconButton,
+    Input,
+    MenuItem,
+    Select,
+    Slider,
+    Container,
+} from "@material-ui/core";
+import { Grid } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
 const MainStyled = styled.div`
     background-color: #f9f9f9;
     /* background-color: green; */
     /* z-index: 100; */
-    padding: 3rem;
+    padding: 0 3rem;
 `;
 
 const SortContainer = styled.div`
@@ -84,14 +99,7 @@ const Main = () => {
     };
 
     const handleChangeMultiple = async (event) => {
-        const { options } = event.target;
-        const value = [];
-        for (const opt of options) {
-            if (opt.selected) {
-                value.push(opt.value);
-            }
-        }
-        setFilter(value);
+        setFilter(event.target.value);
     };
 
     const sorted = [
@@ -105,49 +113,110 @@ const Main = () => {
     ];
 
     return (
-        <MainStyled>
-            <SortContainer>
-                <ProductQuantity quantities={quantities} isForFooter={false} />
-                <VerticalLine />
-                <FilterOptions>
-                    {/* <SortBy>Sort by: </SortBy>
-                    {options.map((option, index) => {
-                        return <SortButton key={index}>{option}</SortButton>;
-                    })} */}
-                    <RangeSlider
-                        val={range}
-                        minMax={[...minMax]}
-                        // ariaText={"Filtro de puntos"}
-                        // tTip={"puntos"}
-                        onChange={onChangeHandlerRange}
-                    />
-                    <SelectComponent
-                        name={"Categories"}
-                        options={categories}
-                        val={filter}
-                        onChangeHandler={handleChangeMultiple}
-                    />
-                </FilterOptions>
-                <ChangePageButton
-                    direction={"<"}
-                    onClickHandler={() => onClickHandler(-1)}
-                    disabled={
-                        state.page === 1 || state.productsFiltered.length < 16
-                    }
-                />
-                <ChangePageButton
-                    direction={">"}
-                    onClickHandler={() => onClickHandler(1)}
-                    disabled={
-                        state.page * 16 >= state.productsFiltered.length
-                            ? true
-                            : false
-                    }
-                />
-            </SortContainer>
+        <Container maxWidth='lg' disableGutters={true}>
+            {/* <SortContainer> */}
+            <Grid container alignItems='center' justify='space-around'>
+                <Grid item lg={3}>
+                    <Grid container alignItems='flex-end' justify='flex-start'>
+                        <Grid item lg={6}>
+                            <Typography
+                                variant='subtitle1'
+                                noWrap={false}
+                                align='center'
+                                color='textPrimary'>
+                                {quantities[0]} of {quantities[1]} products
+                                {/* <ProductQuantity
+                                quantities={quantities}
+                                isForFooter={false}
+                            /> */}
+                            </Typography>
+                        </Grid>
+                        <Grid item lg={1}>
+                            <VerticalLine />
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid item lg={8}>
+                    <Grid container alignItems='center' justify='space-around'>
+                        <Grid item lg={5}>
+                            {/* <FilterOptions> */}
+                            <Slider
+                                value={range}
+                                onChange={onChangeHandlerRange}
+                                valueLabelDisplay='auto'
+                                aria-labelledby='range-slider'
+                                max={minMax[1]}
+                                min={minMax[0]}
+                                step={50}
+                                style={{ height: "100%" }}
+                            />
+                        </Grid>
+                        <Grid item lg={5}>
+                            <Select
+                                labelId='demo-mutiple-chip-label'
+                                id='demo-mutiple-chip'
+                                multiple
+                                style={{ width: "100%" }}
+                                value={filter}
+                                onChange={handleChangeMultiple}
+                                input={<Input id='select-multiple-chip' />}
+                                renderValue={(selected) => (
+                                    <div /*className={classes.chips}*/>
+                                        {selected.map((value) => (
+                                            <Chip
+                                                key={value}
+                                                label={value}
+                                                /*className={classes.chip}*/
+                                            />
+                                        ))}
+                                    </div>
+                                )} /*MenuProps={MenuProps}*/
+                            >
+                                {categories.map((name) => (
+                                    <MenuItem
+                                        key={name}
+                                        value={name}
+                                        // style={getStyles(name, personName, theme)}
+                                    >
+                                        {name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </Grid>
+                    </Grid>
+                    {/* </FilterOptions> */}
+                </Grid>
+                <Grid item lg={1}>
+                    <Grid container alignItems='center' justify='flex-end'>
+                        <IconButton
+                            color='primary'
+                            aria-label='add to shopping cart'
+                            onClick={() => onClickHandler(-1)}
+                            disabled={
+                                state.page === 1 ||
+                                state.productsFiltered.length < 16
+                            }>
+                            <NavigateBeforeIcon />
+                        </IconButton>
+                        <IconButton
+                            color='primary'
+                            aria-label='add to shopping cart'
+                            onClick={() => onClickHandler(1)}
+                            disabled={
+                                state.page * 16 >= state.productsFiltered.length
+                                    ? true
+                                    : false
+                            }>
+                            <NavigateNextIcon />
+                        </IconButton>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Line style={{ margin: "1rem" }} />
+            {/* </SortContainer> */}
             <ProductsContainer />
             <Footer />
-        </MainStyled>
+        </Container>
     );
 };
 

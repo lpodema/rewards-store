@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Line } from "../UI/lines";
 import { redeemProduct } from "../../services/services";
 import { REDEEM_PROD, SET_ERROR, UPDATE_POINTS } from "../../utils/constants";
+import { Paper } from "@material-ui/core";
 
 const ProductDiv = styled.div`
     display: flex;
@@ -187,40 +188,42 @@ const Product = (props) => {
         <ProductDiv
             onMouseEnter={() => handleMouse()}
             onMouseLeave={() => handleMouse()}>
-            {user !== null && user.points < cost ? (
-                <>
-                    <NotEnoughCoins>
-                        {/* <NotEnoughCoins> */}
-                        <p>Te faltan {user.points - cost}</p>
-                        <CoinIcon2 src={coin} />
-                        {/* </NotEnoughCoins> */}
-                    </NotEnoughCoins>
-                </>
-            ) : (
-                <ShoppingBagStyles>
-                    <img src={bag} alt={bag} />
-                </ShoppingBagStyles>
-            )}
+            <Paper elevation={3}>
+                {user !== null && user.points < cost ? (
+                    <>
+                        <NotEnoughCoins>
+                            {/* <NotEnoughCoins> */}
+                            <p>Te faltan {user.points - cost}</p>
+                            <CoinIcon2 src={coin} />
+                            {/* </NotEnoughCoins> */}
+                        </NotEnoughCoins>
+                    </>
+                ) : (
+                    <ShoppingBagStyles>
+                        <img src={bag} alt={bag} />
+                    </ShoppingBagStyles>
+                )}
 
-            <ProductImage src={img.url}></ProductImage>
-            <Line />
-            <Category>{category}</Category>
-            <ArticleTitle>{name}</ArticleTitle>
-            <SelectedProductDiv opac={opac}>
-                {hover ? (
-                    <div>
-                        <ValueContainer>
-                            <ValueInCoins>{cost}</ValueInCoins>
-                            <CoinIcon src={coin}></CoinIcon>
-                        </ValueContainer>
-                        <RedeemButton
-                            value={_id}
-                            onClick={() => handleRedeem(_id)}>
-                            Redeem Now
-                        </RedeemButton>
-                    </div>
-                ) : null}
-            </SelectedProductDiv>
+                <ProductImage src={img.url}></ProductImage>
+                <Line />
+                <Category>{category}</Category>
+                <ArticleTitle>{name}</ArticleTitle>
+                <SelectedProductDiv opac={opac}>
+                    {hover ? (
+                        <div>
+                            <ValueContainer>
+                                <ValueInCoins>{cost}</ValueInCoins>
+                                <CoinIcon src={coin}></CoinIcon>
+                            </ValueContainer>
+                            <RedeemButton
+                                value={_id}
+                                onClick={() => handleRedeem(_id)}>
+                                Redeem Now
+                            </RedeemButton>
+                        </div>
+                    ) : null}
+                </SelectedProductDiv>
+            </Paper>
         </ProductDiv>
     );
 };
