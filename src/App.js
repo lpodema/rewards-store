@@ -2,6 +2,8 @@ import Header from "./components/headerArea/header";
 import Main from "./components/mainArea/main";
 import styled from "styled-components";
 import Store from "./store/store";
+import theme from "./components/UI/theme";
+import { ThemeProvider } from "@material-ui/core";
 // import {
 //     getProducts,
 //     addPoints,
@@ -24,9 +26,11 @@ function App() {
     // redeemProduct("5a0b36ac734d1d08bf70856c");
     return (
         <Store>
-            <AppStyled>
-                <Header /> <Main />
-            </AppStyled>
+            <ThemeProvider theme={theme}>
+                <AppStyled>
+                    <Header /> <Main />
+                </AppStyled>
+            </ThemeProvider>
         </Store>
     );
 }

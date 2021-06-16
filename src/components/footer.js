@@ -1,26 +1,10 @@
 import { useContext } from "react";
-import styled from "styled-components";
 import { Context } from "../store/store";
-import { ChangePageButton } from "./UI/buttons";
 import { Line } from "./UI/lines";
-import { ProductQuantity } from "./UI/other";
 import { CHANGE_PAGE } from "../utils/constants";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import { Grid, IconButton, Typography } from "@material-ui/core";
-
-const FooterStyled = styled.div`
-    display: flex;
-    /* background-color: purple; */
-    /* background-color: #f9f9f9; */
-    width: 90%;
-    line-height: 1rem;
-    flex-direction: row;
-    align-items: center;
-    align-content: space-between;
-    margin: auto;
-    padding: 0 0 1rem 0;
-`;
 
 const Footer = () => {
     const [state, dispatch] = useContext(Context);
