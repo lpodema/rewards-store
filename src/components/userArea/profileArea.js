@@ -1,5 +1,12 @@
 import React from "react";
-import { AppBar, Box, Container, Grid, makeStyles, Paper } from "@material-ui/core";
+import {
+    AppBar,
+    Box,
+    Container,
+    Grid,
+    makeStyles,
+    Paper,
+} from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
@@ -64,14 +71,14 @@ const ProfileArea = () => {
                 </Paper>
             </Grid>
             <Grid item>
-                <Container maxWidth="md">
-                <TabPanel value={value} index={0}>
-                    <Profile />
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                    <RedeemHistory />
-                </TabPanel>
-                </Container>
+                {/* <Container fixed> */}
+                    <TabPanel value={value} index={0}>
+                        <Profile />
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                        <RedeemHistory />
+                    </TabPanel>
+                {/* </Container> */}
             </Grid>
         </Grid>
     );

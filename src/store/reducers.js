@@ -90,6 +90,7 @@ const Reducer = (state, action) => {
                 ...state,
             };
         case UPDATE_HISTORY:
+            console.log(action.payload)
             return {
                 ...state,
                 history: action.payload,

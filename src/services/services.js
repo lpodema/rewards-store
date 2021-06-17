@@ -57,8 +57,13 @@ export const getHistory = async () => {
 
     if (response.status === 200) {
         const content = await response.json();
-        console.log(content);
-        return content;
+        // console.log(content);
+        const sorted = await content.sort((a, b) => {
+            const aDate = new Date(a.createDate);
+            const bDate = new Date(b.createDate);
+            return bDate - aDate;
+        });
+        return sorted;
     } else {
         console.log("GET_HISTORY: error en el fetch");
     }

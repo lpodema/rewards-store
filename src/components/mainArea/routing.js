@@ -6,7 +6,7 @@ import ProfileArea from "../userArea/profileArea";
 const Routing = () => {
     return (
         <Switch>
-            <Route exact path='/'>
+            <Route exact path='/rewards-store'>
                 <Main />
             </Route>
             <Route path='/profile'>
