@@ -1,5 +1,33 @@
 import styled from "styled-components";
 import { POINTS_BUTTONS } from "../../utils/constants";
+import Modal from "@material-ui/core/Modal";
+import { makeStyles } from "@material-ui/core/styles";
+import { useState } from "react";
+
+
+function getModalStyle() {
+    const top = 50;
+    const left = 50;
+
+    return {
+        top: `${top}%`,
+        left: `${left}%`,
+        transform: `translate(-${top}%, -${left}%)`,
+    };
+}
+
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        position: "absolute",
+        width: 400,
+        height: 400,
+        backgroundColor: theme.palette.background.paper,
+        border: "2px solid #000",
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+    },
+}));
+
 const ModalContainer = styled.div`
     position: absolute;
     top: 0;
@@ -44,12 +72,16 @@ const Title = styled.h3`
     background-color: yellow;
 `;
 
-const Modal = (props) => {
+const AddPointsModal = (props) => {
+    const classes = useStyles();
+    const [modalStyle] = useState(getModalStyle);
     return (
-        <ModalContainer>
-            <Title>Agregar más puntos</Title>
-            <CloseButton onClick={() => props.setModal(false)}>X</CloseButton>
-            <>
+        <Modal
+            open={props.modal}
+            onClose={() => props.onClose(false)}
+            aria-labelledby='simple-modal-title'
+            aria-describedby='simple-modal-description'>
+            <div style={modalStyle} className={classes.paper}>
                 {POINTS_BUTTONS.map((button) => (
                     <AddPointsButton
                         key={button.value}
@@ -57,9 +89,9 @@ const Modal = (props) => {
                         {button.text}
                     </AddPointsButton>
                 ))}
-            </>
-        </ModalContainer>
+            </div>
+        </Modal>
     );
 };
 
-export default Modal;
+export default AddPointsModal;

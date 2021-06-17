@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Store from "./store/store";
 import theme from "./components/UI/theme";
 import { ThemeProvider } from "@material-ui/core";
+import Routing from "./components/mainArea/routing";
 // import {
 //     getProducts,
 //     addPoints,
@@ -28,7 +29,7 @@ function App() {
         <Store>
             <ThemeProvider theme={theme}>
                 <AppStyled>
-                    <Header /> <Main />
+                    <Header /> <Routing />
                 </AppStyled>
             </ThemeProvider>
         </Store>

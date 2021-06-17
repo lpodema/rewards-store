@@ -8,7 +8,7 @@ import Modal from "./addPointsModal";
 import { UPDATE_POINTS, LOG_USER } from "../../utils/constants";
 
 const InfoArea = styled.div`
-    width: 100%;
+    /* width: 100%; */
     /* height: 1rem; */
     display: flex;
     flex-direction: column;
@@ -31,6 +31,8 @@ const Container = styled.div`
     text-align: left;
     margin: 1rem;
     align-content: space-between;
+    background-color: white;
+    border-radius: 2rem;
 `;
 
 const CoinStack = styled.div`
@@ -39,23 +41,23 @@ const CoinStack = styled.div`
     /* height: 3fr; */
     display: flex;
     flex-direction: row;
-    background-color: #ededed;
+    /* background-color: #ededed; */
     border-radius: 1rem;
     margin: 0 1rem;
     padding: 0 1rem;
 `;
 
 const UserInfo = () => {
+    const [modal, setModal] = useState(false);
     const [state, dispatch] = useContext(Context);
 
-    const [modal, setModal] = useState(false);
-    useEffect(() => {
-        const fetchData = async () => {
-            const user = await getUserInfo();
-            dispatch({ type: LOG_USER, payload: user });
-        };
-        fetchData();
-    }, [dispatch]);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         const user = await getUserInfo();
+    //         dispatch({ type: LOG_USER, payload: user });
+    //     };
+    //     fetchData();
+    // }, [dispatch]);
 
     const onClickHandler = async (number) => {
         const points = await addPoints(number);
@@ -75,9 +77,6 @@ const UserInfo = () => {
                 </CoinStack>
                 <p>{state.user ? state.user.name : "Not logged in"}</p>
             </Container>
-            {modal ? (
-                <Modal setModal={setModal} onClickHandler={onClickHandler} />
-            ) : null}
         </InfoArea>
     );
 };

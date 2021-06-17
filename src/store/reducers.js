@@ -8,6 +8,7 @@ import {
     REDEEM_PROD,
     UPDATE_HISTORY,
     SET_ERROR,
+    LOGOUT_USER
 } from "../utils/constants";
 
 const Reducer = (state, action) => {
@@ -20,6 +21,12 @@ const Reducer = (state, action) => {
                     points: action.payload.points,
                 },
             };
+        case LOGOUT_USER:
+            console.log("entró al log out")
+            return{
+                ...state,
+                user: null
+            }
         case SET_PRODUCTS:
             return {
                 ...state,

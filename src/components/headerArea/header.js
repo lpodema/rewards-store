@@ -10,10 +10,15 @@ import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import { useState } from "react";
-import { makeStyles, Drawer } from "@material-ui/core";
+import { useContext, useState } from "react";
+import { makeStyles } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import { getUserInfo } from "../../services/services";
+import LoadingModal from "../UI/loadingModal";
 
-import DrawerMenuItems from "../UI/menuDrawer";
+import AddPointsModal from "./addPointsModal";
+import { LOG_USER, LOGOUT_USER } from "../../utils/constants";
+import { Context } from "../../store/store";
 const HeaderContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -44,24 +49,31 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
     const classes = useStyles();
-    const [auth, setAuth] = useState(true);
+    const [auth, setAuth] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-    const [openDrawer, setOpenDrawer] = useState(false);
-    const toggleDrawer = (open) => (event) => {
-        if (
-            event.type === "keydown" &&
-            (event.key === "Tab" || event.key === "Shift")
-        ) {
-            return;
-        }
-        console.log("EL DRAWEEER");
-        setOpenDrawer(open);
-        console.log(openDrawer);
-    };
+    const [addPointsModal, setAddPointsModal] = useState(false);
+    const [state, dispatch] = useContext(Context);
+    const [authModal, setAuthModal] = useState(false);
 
-    const handleChange = (event) => {
-        setAuth(event.target.checked);
+    const handleUserAuth = async (value) => {
+        handleClose();
+        setAuthModal(true);
+        if (value) {
+            // console.log("GET USER");
+            const user = await getUserInfo();
+            dispatch({ type: LOG_USER, payload: user });
+            // setAuthModal(false);
+            setAuth(true);
+            setAuthModal(false);
+        } else {
+            console.log("Logging out");
+            setTimeout(function () {
+                dispatch({ type: LOGOUT_USER });
+                setAuth(false);
+                setAuthModal(false);
+            }, 5000);
+        }
     };
 
     const handleMenu = (event) => {
@@ -72,68 +84,76 @@ const Header = () => {
         setAnchorEl(null);
     };
 
+    const handleModal = (value) => {
+        setAddPointsModal(value);
+    };
+
     return (
         <HeaderContainer>
-            <LogoImage src={kite} />
             <div>
-                <UserInfo />
                 <AppBar position='fixed'>
                     <Toolbar>
-                        <IconButton
-                            edge='start'
-                            color='inherit'
-                            aria-label='menu'
-                            className={classes.menuButton}
-                            onClick={toggleDrawer(true)}>
-                            <MenuIcon />
-                            <Drawer
-                                anchor={"left"}
-                                open={openDrawer}
-                                onClose={toggleDrawer(false)}>
-                                <DrawerMenuItems toggleDrawer={toggleDrawer} />
-                            </Drawer>
-                        </IconButton>
-
+                        <LogoImage src={kite} />
                         <Typography variant='h6' className={classes.title}>
                             Reward Store
                         </Typography>
-                        {auth && (
-                            <div>
-                                <IconButton
-                                    aria-label='account of current user'
-                                    aria-controls='menu-appbar'
-                                    aria-haspopup='true'
-                                    onClick={handleMenu}
-                                    color='inherit'>
-                                    <AccountCircle />
-                                </IconButton>
-                                <Menu
-                                    id='menu-appbar'
-                                    anchorEl={anchorEl}
-                                    anchorOrigin={{
-                                        vertical: "top",
-                                        horizontal: "right",
-                                    }}
-                                    keepMounted
-                                    transformOrigin={{
-                                        vertical: "top",
-                                        horizontal: "right",
-                                    }}
-                                    open={open}
-                                    onClose={handleClose}>
+                        <UserInfo />
+                        <div>
+                            <IconButton
+                                aria-label='account of current user'
+                                aria-controls='menu-appbar'
+                                aria-haspopup='true'
+                                onClick={handleMenu}
+                                color='inherit'>
+                                <AccountCircle />
+                            </IconButton>
+                            <Menu
+                                id='menu-appbar'
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                    vertical: "top",
+                                    horizontal: "right",
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "right",
+                                }}
+                                open={open}
+                                onClose={handleClose}>
+                                <Link to='/'>
+                                    <MenuItem onClick={handleClose}>
+                                        Home
+                                    </MenuItem>
+                                </Link>
+                                <Link to='/profile'>
                                     <MenuItem onClick={handleClose}>
                                         Profile
                                     </MenuItem>
-                                    <MenuItem onClick={handleClose}>
-                                        My account
-                                    </MenuItem>
-                                </Menu>
-                            </div>
-                        )}
+                                </Link>
+                                {/* <MenuItem onClick={() => handleModal(true)}>
+                                    Add points
+                                </MenuItem> */}
+                                <MenuItem onClick={() => handleUserAuth(!auth)}>
+                                    {auth ? (
+                                        <div> Logout </div>
+                                    ) : (
+                                        <div> Login </div>
+                                    )}
+                                </MenuItem>
+                            </Menu>
+                        </div>
                     </Toolbar>
                 </AppBar>
-                <Banner />
             </div>
+            <AddPointsModal onClose={handleModal} modal={addPointsModal} />
+            <LoadingModal
+                onClose={() => setAuthModal(false)}
+                val={auth}
+                text1='Logging out...'
+                text2='Logging in...'
+                open={authModal}
+            />
         </HeaderContainer>
     );
 };

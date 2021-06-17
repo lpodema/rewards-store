@@ -25,6 +25,7 @@ import {
     PAGINATE_PRODUCTS,
     CHANGE_PAGE,
 } from "../../utils/constants";
+import Banner from "../headerArea/banner";
 
 const Main = () => {
     const [state, dispatch] = useContext(Context);
@@ -82,146 +83,156 @@ const Main = () => {
     ];
 
     return (
-        <Container maxWidth='lg' disableGutters={true}>
-            {/* <SortContainer> */}
-            <Grid
-                container
-                direction='column'
-                alignItems='stretch'
-                justify='center'>
-                <Grid item>
-                    <Grid container alignItems='center' justify='space-around'>
-                        <Grid item lg={3}>
-                            <Grid
-                                container
-                                alignItems='flex-end'
-                                justify='flex-start'>
-                                <Grid item lg={6}>
-                                    <Typography
-                                        variant='subtitle1'
-                                        noWrap={false}
-                                        align='center'
-                                        color='textPrimary'>
-                                        {quantities[0]} of {quantities[1]}{" "}
-                                        products
-                                        {/* <ProductQuantity
+        <>
+            <Banner />
+            <Container maxWidth='lg' disableGutters={true}>
+                {/* <SortContainer> */}
+                <Grid
+                    container
+                    direction='column'
+                    alignItems='stretch'
+                    justify='center'>
+                    <Grid item>
+                        <Grid
+                            container
+                            alignItems='center'
+                            justify='space-around'>
+                            <Grid item lg={3}>
+                                <Grid
+                                    container
+                                    alignItems='flex-end'
+                                    justify='flex-start'>
+                                    <Grid item lg={6}>
+                                        <Typography
+                                            variant='subtitle1'
+                                            noWrap={false}
+                                            align='center'
+                                            color='textPrimary'>
+                                            {quantities[0]} of {quantities[1]}{" "}
+                                            products
+                                            {/* <ProductQuantity
                                 quantities={quantities}
                                 isForFooter={false}
                             /> */}
-                                    </Typography>
-                                </Grid>
-                                <Grid item lg={1}>
-                                    <VerticalLine />
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <Grid item lg={8}>
-                            <Grid
-                                container
-                                alignItems='center'
-                                justify='space-around'>
-                                <Grid item lg={5}>
-                                    <Typography
-                                        variant='subtitle1'
-                                        noWrap={false}
-                                        align='center'
-                                        color='textPrimary'
-                                        style={{ paddingTop: "0.5rem" }}>
-                                        Price range
-                                    </Typography>
-                                    <Slider
-                                        value={range}
-                                        onChange={onChangeHandlerRange}
-                                        valueLabelDisplay='auto'
-                                        aria-labelledby='range-slider'
-                                        max={minMax[1]}
-                                        min={minMax[0]}
-                                        step={50}
-                                    />
-                                </Grid>
-                                <Grid item lg={5}>
-                                    <FormControl
-                                        style={{
-                                            width: "100%",
-                                            height: "2rem",
-                                        }}>
-                                        <Select
-                                            labelId='demo-mutiple-chip-label'
-                                            id='demo-mutiple-chip'
-                                            multiple
-                                            value={filter}
-                                            onChange={handleChangeMultiple}
-                                            input={<Input />}
-                                            renderValue={(selected) => (
-                                                <div /*className={classes.chips}*/
-                                                >
-                                                    {selected.map((value) => (
-                                                        <Chip
-                                                            key={value}
-                                                            label={value}
-                                                            /*className={classes.chip}*/
-                                                        />
-                                                    ))}
-                                                </div>
-                                            )} /*MenuProps={MenuProps}*/
-                                        >
-                                            {categories.map((name) => (
-                                                <MenuItem
-                                                    key={name}
-                                                    value={name}
-                                                    // style={getStyles(name, personName, theme)}
-                                                >
-                                                    {name}
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                        <FormHelperText>
-                                            Categories
-                                        </FormHelperText>
-                                    </FormControl>
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item lg={1}>
+                                        <VerticalLine />
+                                    </Grid>
                                 </Grid>
                             </Grid>
-                            {/* </FilterOptions> */}
-                        </Grid>
-                        <Grid item lg={1}>
-                            <Grid
-                                container
-                                alignItems='center'
-                                justify='flex-end'>
-                                <IconButton
-                                    color='primary'
-                                    aria-label='add to shopping cart'
-                                    onClick={() => onClickHandler(-1)}
-                                    disabled={
-                                        state.page === 1 ||
-                                        state.productsFiltered.length < 16
-                                    }>
-                                    <NavigateBeforeIcon />
-                                </IconButton>
-                                <IconButton
-                                    color='primary'
-                                    aria-label='add to shopping cart'
-                                    onClick={() => onClickHandler(1)}
-                                    disabled={
-                                        state.page * 16 >=
-                                        state.productsFiltered.length
-                                            ? true
-                                            : false
-                                    }>
-                                    <NavigateNextIcon />
-                                </IconButton>
+                            <Grid item lg={8}>
+                                <Grid
+                                    container
+                                    alignItems='center'
+                                    justify='space-around'>
+                                    <Grid item lg={5}>
+                                        <Typography
+                                            variant='subtitle1'
+                                            noWrap={false}
+                                            align='center'
+                                            color='textPrimary'
+                                            style={{ paddingTop: "0.5rem" }}>
+                                            Price range
+                                        </Typography>
+                                        <Slider
+                                            value={range}
+                                            onChange={onChangeHandlerRange}
+                                            valueLabelDisplay='auto'
+                                            aria-labelledby='range-slider'
+                                            max={minMax[1]}
+                                            min={minMax[0]}
+                                            step={50}
+                                        />
+                                    </Grid>
+                                    <Grid item lg={5}>
+                                        <FormControl
+                                            style={{
+                                                width: "100%",
+                                                height: "2rem",
+                                            }}>
+                                            <Select
+                                                labelId='demo-mutiple-chip-label'
+                                                id='demo-mutiple-chip'
+                                                multiple
+                                                value={filter}
+                                                onChange={handleChangeMultiple}
+                                                input={<Input />}
+                                                renderValue={(selected) => (
+                                                    <div /*className={classes.chips}*/
+                                                    >
+                                                        {selected.map(
+                                                            (value) => (
+                                                                <Chip
+                                                                    key={value}
+                                                                    label={
+                                                                        value
+                                                                    }
+                                                                    /*className={classes.chip}*/
+                                                                />
+                                                            )
+                                                        )}
+                                                    </div>
+                                                )} /*MenuProps={MenuProps}*/
+                                            >
+                                                {categories.map((name) => (
+                                                    <MenuItem
+                                                        key={name}
+                                                        value={name}
+                                                        // style={getStyles(name, personName, theme)}
+                                                    >
+                                                        {name}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                            <FormHelperText>
+                                                Categories
+                                            </FormHelperText>
+                                        </FormControl>
+                                    </Grid>
+                                </Grid>
+                                {/* </FilterOptions> */}
+                            </Grid>
+                            <Grid item lg={1}>
+                                <Grid
+                                    container
+                                    alignItems='center'
+                                    justify='flex-end'>
+                                    <IconButton
+                                        color='primary'
+                                        aria-label='add to shopping cart'
+                                        onClick={() => onClickHandler(-1)}
+                                        disabled={
+                                            state.page === 1 ||
+                                            state.productsFiltered.length < 16
+                                        }>
+                                        <NavigateBeforeIcon />
+                                    </IconButton>
+                                    <IconButton
+                                        color='primary'
+                                        aria-label='add to shopping cart'
+                                        onClick={() => onClickHandler(1)}
+                                        disabled={
+                                            state.page * 16 >=
+                                            state.productsFiltered.length
+                                                ? true
+                                                : false
+                                        }>
+                                        <NavigateNextIcon />
+                                    </IconButton>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
+                    <Grid item>
+                        <Line />
+                    </Grid>
                 </Grid>
-                <Grid item>
-                    <Line />
-                </Grid>
-            </Grid>
-            {/* </SortContainer> */}
-            <ProductsContainer />
-            <Footer />
-        </Container>
+                {/* </SortContainer> */}
+                <ProductsContainer />
+                <Footer />
+            </Container>
+        </>
     );
 };
 
