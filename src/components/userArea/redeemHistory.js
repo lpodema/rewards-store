@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Grid } from "@material-ui/core";
 import { getHistory } from "../../services/services";
 import { Context } from "../../store/store";
@@ -8,6 +8,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import LoadingModal from "../UI/loadingModal";
 
 const RedeemHistory = (props) => {
+    // const mountedRef = useRef(true);
     const [state, dispatch] = useContext(Context);
     const [page, setPage] = React.useState(1);
     const [loadingModal, setLoadingModal] = useState(false);
@@ -18,15 +19,31 @@ const RedeemHistory = (props) => {
     };
 
     useEffect(() => {
+        let isSubscribed = true;
         async function fetchData() {
             setLoadingModal(true);
-            const history = await getHistory();
-            await dispatch({ type: UPDATE_HISTORY, payload: history });
-            setProductHistory(state.history.slice(0 * 20, 1 * 20));
+            if (state.history.length > 0) {
+                if (isSubscribed) {
+                    setProductHistory(state.history.slice(0 * 20, 1 * 20));
+                }
+            } else {
+                const history = await getHistory();
+                await dispatch({ type: UPDATE_HISTORY, payload: history });
+                if (isSubscribed) {
+                    setProductHistory(state.history.slice(0 * 20, 1 * 20));
+                }
+            }
             setLoadingModal(false);
         }
         fetchData();
-    }, []);
+        return () => (isSubscribed = false);
+    }, [dispatch, state.history]);
+
+    // useEffect(() => {
+    //     return () => {
+    //         mountedRef.current = false;
+    //     };
+    // }, []);
 
     return (
         <Grid

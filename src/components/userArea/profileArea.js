@@ -48,7 +48,7 @@ const ProfileArea = () => {
             // alignContent='center'
             justify='center'
             direction='column'
-            justifyContent='center'>
+           >
             <Grid item>
                 <Paper elevation={3}>
                     <AppBar position='static' color='default'>

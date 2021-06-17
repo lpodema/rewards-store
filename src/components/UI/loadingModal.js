@@ -33,7 +33,7 @@ const LoadingModal = (props) => {
     return (
         <Modal
             open={props.open}
-            onClose={() => props.onClose(false)}
+            // onClose={() => props.onClose(false)}
             aria-labelledby='simple-modal-title'
             aria-describedby='simple-modal-description'>
             <div style={modalStyle} className={classes.paper}>
