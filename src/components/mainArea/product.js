@@ -9,6 +9,7 @@ import { Line } from "../UI/lines";
 import { redeemProduct } from "../../services/services";
 import { REDEEM_PROD, SET_ERROR, UPDATE_POINTS } from "../../utils/constants";
 import { Paper } from "@material-ui/core";
+import RedeemProductModal from "./redeemModal";
 
 const ProductDiv = styled.div`
     display: flex;
@@ -169,13 +170,19 @@ const Product = (props) => {
         hover ? setOpac(0) : setOpac(0.5);
         hover ? setBag(bluebag) : setBag(whitebag);
     };
+    const [modal, setModal] = useState(false);
 
     const handleRedeem = async (value) => {
+        console.log("entró al redeem", value);
         const result = await redeemProduct(value);
+
+        //TODO agregar un cartel que avise SUCCESS/ERROR
         console.log(result);
         if (result) {
             dispatch({ type: REDEEM_PROD });
             dispatch({ type: UPDATE_POINTS, payload: user.points - cost });
+            localStorage.removeItem("history");
+            setModal(false);
         } else {
             dispatch({
                 type: SET_ERROR,
@@ -217,13 +224,19 @@ const Product = (props) => {
                             </ValueContainer>
                             <RedeemButton
                                 value={_id}
-                                onClick={() => handleRedeem(_id)}>
+                                onClick={() => setModal(true)}>
                                 Redeem Now
                             </RedeemButton>
                         </div>
                     ) : null}
                 </SelectedProductDiv>
             </Paper>
+            <RedeemProductModal
+                onCloseHandler={() => setModal(false)}
+                modal={modal}
+                product={props.product}
+                onClickHandler={handleRedeem}
+            />
         </ProductDiv>
     );
 };

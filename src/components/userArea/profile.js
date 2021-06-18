@@ -13,7 +13,7 @@ import { Card, Typography } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import coin from "../../assets/icons/coin.svg";
-import AddPointsModal from "../headerArea/addPointsModal";
+import AddPointsModal from "./addPointsModal";
 
 const Profile = (props) => {
     const user = JSON.parse(localStorage.getItem("user"));

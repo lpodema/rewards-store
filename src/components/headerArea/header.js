@@ -15,7 +15,6 @@ import { Link } from "react-router-dom";
 import { getUserInfo } from "../../services/services";
 import LoadingModal from "../UI/loadingModal";
 
-import AddPointsModal from "./addPointsModal";
 import { LOG_USER, LOGOUT_USER } from "../../utils/constants";
 import { Context } from "../../store/store";
 import { withRouter } from "react-router-dom";
@@ -52,7 +51,6 @@ const Header = (props) => {
     const [auth, setAuth] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-    const [addPointsModal, setAddPointsModal] = useState(false);
     const [state, dispatch] = useContext(Context);
     const [loadingModal, setLoadingModal] = useState(false);
 
@@ -96,9 +94,7 @@ const Header = (props) => {
         setAnchorEl(null);
     };
 
-    const handleModal = (value) => {
-        setAddPointsModal(value);
-    };
+  
 
     return (
         <HeaderContainer>
@@ -155,7 +151,6 @@ const Header = (props) => {
                     </Toolbar>
                 </AppBar>
             </div>
-            <AddPointsModal onClose={handleModal} modal={addPointsModal} />
             <LoadingModal
                 onClose={() => setLoadingModal(false)}
                 val={auth}

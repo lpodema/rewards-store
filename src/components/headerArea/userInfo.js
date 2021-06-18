@@ -4,7 +4,6 @@ import coin from "../../assets/icons/coin.svg";
 import { getUserInfo } from "../../services/services";
 import { Context } from "../../store/store";
 import { addPoints } from "../../services/services";
-import Modal from "./addPointsModal";
 import { UPDATE_POINTS, LOG_USER } from "../../utils/constants";
 
 const InfoArea = styled.div`
