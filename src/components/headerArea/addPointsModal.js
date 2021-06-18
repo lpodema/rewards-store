@@ -1,8 +1,10 @@
 import styled from "styled-components";
-import { POINTS_BUTTONS } from "../../utils/constants";
+import { POINTS_BUTTONS, UPDATE_POINTS } from "../../utils/constants";
 import { Modal, Grid, Card, Button, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { addPoints } from "../../services/services";
+import { Context } from "../../store/store";
 
 function getModalStyle() {
     const top = 50;
@@ -73,12 +75,21 @@ const Title = styled.h3`
 `;
 
 const AddPointsModal = (props) => {
+    const [state, dispatch] = useContext(Context);
+
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
+    const onClickHandler = async (amount) => {
+        const newAmount = await addPoints(amount);
+        dispatch({ type: UPDATE_POINTS, payload: newAmount });
+        //TODO agregar un cartel que avise SUCCESS/ERROR
+        props.onCloseHandler(false);
+    };
+
     return (
         <Modal
             open={props.modal}
-            onClose={() => props.onClose(false)}
+            onClose={() => props.onCloseHandler(false)}
             aria-labelledby='simple-modal-title'
             aria-describedby='simple-modal-description'>
             <Grid
@@ -88,22 +99,27 @@ const AddPointsModal = (props) => {
                 justify='space-around'
                 alignItems='stretch'
                 spacing={0}
-                direction="column">
-                    <Grid item><Typography>Add points</Typography></Grid>
-                    <Grid item>
-                    <Grid container direction="row">
-                {POINTS_BUTTONS.map((button) => (
-                    <Grid item key={button.value} lg={4}>
-                        <Button
-                            style={{ width: "90%" }}
-                            variant='contained'
-                            color='primary'
-                            onClick={() => props.onClickHandler(button.value)}>
-                            {button.text}
-                        </Button>
+                direction='column'>
+                <Grid item>
+                    <Typography>Add points</Typography>
+                </Grid>
+                <Grid item>
+                    <Grid container direction='row'>
+                        {POINTS_BUTTONS.map((button) => (
+                            <Grid item key={button.value} lg={4}>
+                                <Button
+                                    style={{ width: "90%" }}
+                                    variant='contained'
+                                    color='primary'
+                                    onClick={() =>
+                                        onClickHandler(button.value)
+                                    }>
+                                    {button.text}
+                                </Button>
+                            </Grid>
+                        ))}
                     </Grid>
-                ))}
-                </Grid></Grid>
+                </Grid>
             </Grid>
         </Modal>
     );

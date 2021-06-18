@@ -31,7 +31,6 @@ const LoggedInRoute = ({ component: Component, authed, ...rest }) => {
 };
 const Routing = () => {
     const authed = localStorage.getItem("loggedIn") === "true"
-    console.log(authed);
     return (
         <Switch>
             <LoggedInRoute

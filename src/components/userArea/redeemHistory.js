@@ -14,6 +14,7 @@ const RedeemHistory = (props) => {
     const [loadingModal, setLoadingModal] = useState(false);
     const [productHistory, setProductHistory] = useState(null);
     const history = JSON.parse(localStorage.getItem("history"));
+    
     const handleChange = (event, value) => {
         setPage(value);
         setProductHistory(history.slice((page - 1) * 20, page * 20));
@@ -32,10 +33,9 @@ const RedeemHistory = (props) => {
                 }
             } else {
                 const history = await getHistory();
-
                 await dispatch({ type: UPDATE_HISTORY, payload: history });
                 if (isSubscribed) {
-                    setProductHistory(prevHistory.slice(0 * 20, 1 * 20));
+                    setProductHistory(history.slice(0 * 20, 1 * 20));
                 }
             }
             setLoadingModal(false);
@@ -86,6 +86,7 @@ const RedeemHistory = (props) => {
                 </Grid>
             </Grid>
             <Grid item>
+                {history? 
                 <Grid
                     container
                     justify='space-evenly'
@@ -100,7 +101,8 @@ const RedeemHistory = (props) => {
                         page={page}
                         onChange={handleChange}
                     />
-                </Grid>
+                </Grid>:null
+                }
             </Grid>
         </Grid>
     );

@@ -35,9 +35,20 @@ const Main = () => {
     useEffect(() => {
         const fetchData = async () => {
             const products = await getProducts();
+            localStorage.setItem("products", JSON.stringify(products));
             dispatch({ type: SET_PRODUCTS, payload: products });
         };
-        fetchData();
+        const checkPrevLoad = async () => {
+            if (localStorage.getItem("products")) {
+                dispatch({
+                    type: SET_PRODUCTS,
+                    payload: await JSON.parse(localStorage.getItem("products")),
+                });
+            } else {
+                fetchData();
+            }
+        };
+        checkPrevLoad();
     }, [dispatch]);
 
     useEffect(() => {

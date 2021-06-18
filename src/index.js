@@ -6,12 +6,10 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Store from "./store/store";
 
 ReactDOM.render(
-    <React.StrictMode>
         <Router>
             <Store>
                 <App />
             </Store>
-        </Router>
-    </React.StrictMode>,
+        </Router>,
     document.getElementById("root")
 );

@@ -73,7 +73,7 @@ const Header = (props) => {
                 dispatch({ type: LOGOUT_USER });
                 setAuth(false);
                 setLoadingModal(false);
-                localStorage.removeItem("user");
+                localStorage.clear();
                 props.history.push("/login");
             }, 2000);
         }
@@ -81,9 +81,8 @@ const Header = (props) => {
 
     useEffect(() => {
         const user = localStorage.getItem("user");
-        console.log("entró al useeffect", user);
         if (user) {
-            dispatch({ type: LOG_USER, payload: JSON.parse(user) });
+            // dispatch({ type: LOG_USER, payload: JSON.parse(user) });
             setAuth(true);
         }
         return () => {};

@@ -107,7 +107,10 @@ const Profile = (props) => {
                     </Grid>
                 </Grid>
             </Grid>
-            <AddPointsModal onClose={handleModal} modal={addPointsModal} />
+            <AddPointsModal
+                onCloseHandler={handleModal}
+                modal={addPointsModal}
+            />
         </Grid>
     );
 };

@@ -28,7 +28,6 @@ function App() {
     useEffect(() => {
         async function loggingIn() {
             const user = await localStorage.getItem("user");
-            console.log("entró al useeffect", user);
             if (user) {
                await dispatch({ type: LOG_USER, payload: await JSON.parse(user) });
             }
