@@ -13,31 +13,36 @@ const RedeemHistory = (props) => {
     const [page, setPage] = React.useState(1);
     const [loadingModal, setLoadingModal] = useState(false);
     const [productHistory, setProductHistory] = useState(null);
+    const history = JSON.parse(localStorage.getItem("history"));
     const handleChange = (event, value) => {
         setPage(value);
-        setProductHistory(state.history.slice((page - 1) * 20, page * 20));
+        setProductHistory(history.slice((page - 1) * 20, page * 20));
     };
 
     useEffect(() => {
         let isSubscribed = true;
         async function fetchData() {
             setLoadingModal(true);
-            if (state.history.length > 0) {
+            const prevHistory = await JSON.parse(
+                localStorage.getItem("history")
+            );
+            if (prevHistory) {
                 if (isSubscribed) {
-                    setProductHistory(state.history.slice(0 * 20, 1 * 20));
+                    setProductHistory(prevHistory.slice(0 * 20, 1 * 20));
                 }
             } else {
                 const history = await getHistory();
+
                 await dispatch({ type: UPDATE_HISTORY, payload: history });
                 if (isSubscribed) {
-                    setProductHistory(state.history.slice(0 * 20, 1 * 20));
+                    setProductHistory(prevHistory.slice(0 * 20, 1 * 20));
                 }
             }
             setLoadingModal(false);
         }
         fetchData();
         return () => (isSubscribed = false);
-    }, [dispatch, state.history]);
+    }, [dispatch]);
 
     // useEffect(() => {
     //     return () => {
@@ -88,7 +93,7 @@ const RedeemHistory = (props) => {
                     direction='column'
                     alignItems='stretch'>
                     <Pagination
-                        count={Math.ceil(state.history.length / 20)}
+                        count={Math.ceil(history.length / 20)}
                         color='primary'
                         showFirstButton
                         showLastButton
