@@ -8,7 +8,7 @@ import {
     REDEEM_PROD,
     UPDATE_HISTORY,
     SET_ERROR,
-    LOGOUT_USER
+    LOGOUT_USER,
 } from "../utils/constants";
 
 const Reducer = (state, action) => {
@@ -16,17 +16,19 @@ const Reducer = (state, action) => {
         case LOG_USER:
             return {
                 ...state,
+                loggedIn: true,
                 user: {
                     name: action.payload.name,
                     points: action.payload.points,
                 },
             };
         case LOGOUT_USER:
-            console.log("entró al log out")
-            return{
+            return {
                 ...state,
-                user: null
-            }
+                loggedIn: false,
+                user: null,
+            };
+
         case SET_PRODUCTS:
             return {
                 ...state,
@@ -90,7 +92,7 @@ const Reducer = (state, action) => {
                 ...state,
             };
         case UPDATE_HISTORY:
-            console.log(action.payload)
+            console.log(action.payload);
             return {
                 ...state,
                 history: action.payload,

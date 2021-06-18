@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import { POINTS_BUTTONS } from "../../utils/constants";
-import Modal from "@material-ui/core/Modal";
+import { Modal, Grid, Card, Button, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useState } from "react";
-
 
 function getModalStyle() {
     const top = 50;
@@ -20,11 +19,12 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         position: "absolute",
         width: 400,
-        height: 400,
+        height: 300,
         backgroundColor: theme.palette.background.paper,
         border: "2px solid #000",
         boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
+        padding: "2rem",
+        // padding: theme.spacing(2, 4, 3),
     },
 }));
 
@@ -81,15 +81,30 @@ const AddPointsModal = (props) => {
             onClose={() => props.onClose(false)}
             aria-labelledby='simple-modal-title'
             aria-describedby='simple-modal-description'>
-            <div style={modalStyle} className={classes.paper}>
+            <Grid
+                style={modalStyle}
+                container
+                className={classes.paper}
+                justify='space-around'
+                alignItems='stretch'
+                spacing={0}
+                direction="column">
+                    <Grid item><Typography>Add points</Typography></Grid>
+                    <Grid item>
+                    <Grid container direction="row">
                 {POINTS_BUTTONS.map((button) => (
-                    <AddPointsButton
-                        key={button.value}
-                        onClick={() => props.onClickHandler(button.value)}>
-                        {button.text}
-                    </AddPointsButton>
+                    <Grid item key={button.value} lg={4}>
+                        <Button
+                            style={{ width: "90%" }}
+                            variant='contained'
+                            color='primary'
+                            onClick={() => props.onClickHandler(button.value)}>
+                            {button.text}
+                        </Button>
+                    </Grid>
                 ))}
-            </div>
+                </Grid></Grid>
+            </Grid>
         </Modal>
     );
 };

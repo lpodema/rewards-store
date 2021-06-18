@@ -7,7 +7,7 @@ import {
     Grid,
 } from "@material-ui/core";
 import { Context } from "../../store/store";
-import { UPDATE_HISTORY } from "../../utils/constants";
+import { LOG_USER, UPDATE_HISTORY } from "../../utils/constants";
 import LoadingModal from "../UI/loadingModal";
 import { Card, Typography } from "@material-ui/core";
 import { Button } from "@material-ui/core";
@@ -16,12 +16,12 @@ import coin from "../../assets/icons/coin.svg";
 import AddPointsModal from "../headerArea/addPointsModal";
 
 const Profile = (props) => {
-    const [state, dispatch] = useContext(Context);
-    const { user } = state;
+    const user = JSON.parse(localStorage.getItem("user"));
     const [addPointsModal, setAddPointsModal] = useState(false);
     const handleModal = (value) => {
         setAddPointsModal(value);
     };
+
     return (
         <Grid container direction='row' alignItems='center' justify='center'>
             <Grid item>

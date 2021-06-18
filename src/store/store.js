@@ -3,6 +3,7 @@ import Reducer from "./reducers";
 
 const initialState = {
     user: null,
+    loggedIn: false,
     products: [],
     productsToShow: [],
     productsFiltered: [],

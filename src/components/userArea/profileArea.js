@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     AppBar,
     Box,
@@ -12,6 +12,9 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Profile from "./profile";
 import RedeemHistory from "./redeemHistory";
+import { useContext } from "react";
+import { Context } from "../../store/store";
+import { LOG_USER } from "../../utils/constants";
 
 const useTabStyles = makeStyles({
     root: {
@@ -47,37 +50,31 @@ const ProfileArea = () => {
             style={{ marginTop: 80 }}
             // alignContent='center'
             justify='center'
-            direction='column'
-           >
+            direction='column'>
             <Grid item>
-                <Paper elevation={3}>
-                    <AppBar position='static' color='default'>
-                        <Tabs
-                            classes={{
-                                root: classes.root,
-                            }}
-                            value={value}
-                            onChange={handleChange}
-                            indicatorColor='primary'
-                            textColor='primary'
-                            centered>
-                            <Tab label='Profile' style={{ width: "100%" }} />
-                            <Tab
-                                label='Redeem History'
-                                style={{ width: "100%" }}
-                            />
-                        </Tabs>
-                    </AppBar>
-                </Paper>
+                <AppBar position='static' color='default'>
+                    <Tabs
+                        classes={{
+                            root: classes.root,
+                        }}
+                        value={value}
+                        onChange={handleChange}
+                        indicatorColor='primary'
+                        textColor='primary'
+                        centered>
+                        <Tab label='Profile' style={{ width: "100%" }} />
+                        <Tab label='Redeem History' style={{ width: "100%" }} />
+                    </Tabs>
+                </AppBar>
             </Grid>
             <Grid item>
                 {/* <Container fixed> */}
-                    <TabPanel value={value} index={0}>
-                        <Profile />
-                    </TabPanel>
-                    <TabPanel value={value} index={1}>
-                        <RedeemHistory />
-                    </TabPanel>
+                <TabPanel value={value} index={0}>
+                    <Profile />
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <RedeemHistory />
+                </TabPanel>
                 {/* </Container> */}
             </Grid>
         </Grid>

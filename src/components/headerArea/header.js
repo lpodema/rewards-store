@@ -9,7 +9,7 @@ import IconButton from "@material-ui/core/IconButton";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { getUserInfo } from "../../services/services";
@@ -18,6 +18,7 @@ import LoadingModal from "../UI/loadingModal";
 import AddPointsModal from "./addPointsModal";
 import { LOG_USER, LOGOUT_USER } from "../../utils/constants";
 import { Context } from "../../store/store";
+import { withRouter } from "react-router-dom";
 const HeaderContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Header = () => {
+const Header = (props) => {
     const classes = useStyles();
     const [auth, setAuth] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -59,21 +60,34 @@ const Header = () => {
         handleClose();
         setLoadingModal(true);
         if (value) {
-            // console.log("GET USER");
             const user = await getUserInfo();
             dispatch({ type: LOG_USER, payload: user });
-            // setLoadingModal(false);
+            localStorage.setItem("user", JSON.stringify(user));
+            // localStorage.setItem("loggedIn", true);
+            props.history.push("/rewards-store");
             setAuth(true);
             setLoadingModal(false);
         } else {
-            console.log("Logging out");
             setTimeout(function () {
                 dispatch({ type: LOGOUT_USER });
                 setAuth(false);
                 setLoadingModal(false);
-            }, 5000);
+                localStorage.removeItem("user");
+                // localStorage.removeItem("loggedIn");
+                props.history.push("/login");
+            }, 2000);
         }
     };
+
+    useEffect(() => {
+        const user = localStorage.getItem("user");
+        console.log("entró al useeffect", user);
+        if (user) {
+            dispatch({ type: LOG_USER, payload: JSON.parse(user) });
+            setAuth(true);
+        }
+        return () => {};
+    }, [dispatch]);
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -130,9 +144,6 @@ const Header = () => {
                                         Profile
                                     </MenuItem>
                                 </Link>
-                                {/* <MenuItem onClick={() => handleModal(true)}>
-                                    Add points
-                                </MenuItem> */}
                                 <MenuItem onClick={() => handleUserAuth(!auth)}>
                                     {auth ? (
                                         <div> Logout </div>
@@ -157,4 +168,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default withRouter(Header);
