@@ -60,20 +60,20 @@ const Header = (props) => {
         handleClose();
         setLoadingModal(true);
         if (value) {
+            localStorage.setItem("loggedIn", true);
             const user = await getUserInfo();
             dispatch({ type: LOG_USER, payload: user });
             localStorage.setItem("user", JSON.stringify(user));
-            // localStorage.setItem("loggedIn", true);
             props.history.push("/rewards-store");
             setAuth(true);
             setLoadingModal(false);
         } else {
             setTimeout(function () {
+                localStorage.removeItem("loggedIn");
                 dispatch({ type: LOGOUT_USER });
                 setAuth(false);
                 setLoadingModal(false);
                 localStorage.removeItem("user");
-                // localStorage.removeItem("loggedIn");
                 props.history.push("/login");
             }, 2000);
         }

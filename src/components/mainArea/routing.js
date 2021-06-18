@@ -30,38 +30,17 @@ const LoggedInRoute = ({ component: Component, authed, ...rest }) => {
     );
 };
 const Routing = () => {
-    const [state, dispatch] = useContext(Context);
-    console.log(state.loggedIn);
-    // let loggedIn = useRef(state.loggedIn);
-
-    // console.log(loggedIn);
-
-    // useEffect(() => {
-    //     loggedIn.current = state.loggedIn;
-    // }, [state.loggedIn]);
-    // const [authed, setAuthed] = useState(true);
-    // useEffect(() => {
-    //     const user = localStorage.getItem("user");
-    //     if (user) {
-    //         setAuthed(true);
-    //     } else {
-    //         setAuthed(false);
-    //     }
-    //     console.log(authed);
-    // }, [state]);
-    // // const { loggedIn } = state;
-    // // console.log(loggedIn);
-    // console.log(authed);
-
+    const authed = localStorage.getItem("loggedIn") === "true"
+    console.log(authed);
     return (
         <Switch>
             <LoggedInRoute
-                authed={state.loggedIn}
+                authed={authed}
                 path='/rewards-store'
                 component={Main}
             />
             <LoggedInRoute
-                authed={state.loggedIn}
+                authed={authed}
                 path='/profile'
                 component={ProfileArea}
             />
