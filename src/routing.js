@@ -14,7 +14,7 @@ const LoggedInRoute = ({ component: Component, authed, ...rest }) => {
                     <Redirect
                         from='*'
                         to={{
-                            pathname: "/login",
+                            pathname: "/rewards-store/login",
                             state: { from: props.location },
                         }}
                     />
@@ -29,21 +29,25 @@ const Routing = () => {
         <Switch>
             <LoggedInRoute
                 authed={authed}
-                path='/profile'
+                path='/rewards-store/profile'
                 component={ProfileArea}
             />
-            <Route path='/login'>
+            <Route path='/rewards-store/login'>
                 <LoggingIn />
             </Route>
             <LoggedInRoute
                 authed={authed}
-                path='/rewards-store'
+                path='/rewards-store/'
                 component={Main}
             />
             {authed ? (
-                <LoggedInRoute authed={authed} path='/' component={Main} />
+                <LoggedInRoute
+                    authed={authed}
+                    path='/rewards-store/'
+                    component={Main}
+                />
             ) : (
-                <Route path='/'>
+                <Route path='/rewards-store/'>
                     <LoggingIn />
                 </Route>
             )}

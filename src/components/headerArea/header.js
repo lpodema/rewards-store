@@ -36,13 +36,13 @@ const Header = (props) => {
         if (value) {
             setLoadingModal(true);
             setTimeout(function () {
+                localStorage.clear();
                 dispatch({ type: LOGOUT_USER });
                 setLoadingModal(false);
-                localStorage.clear();
-                props.history.push("/login");
+                props.history.push("/rewards-store/login");
             }, 2000);
         } else {
-            props.history.push("/login");
+            props.history.push("/rewards-store/login");
         }
     };
 
@@ -102,7 +102,7 @@ const Header = (props) => {
                             open={open}
                             onClose={handleClose}>
                             <Link
-                                to='/'
+                                to='/rewards-store/'
                                 style={{
                                     textDecoration: "none",
                                     color: " #202020",
@@ -110,7 +110,7 @@ const Header = (props) => {
                                 <MenuItem onClick={handleClose}>Home</MenuItem>
                             </Link>
                             <Link
-                                to='/profile'
+                                to='/rewards-store/profile'
                                 style={{
                                     textDecoration: "none",
                                     color: " #202020",
@@ -122,14 +122,12 @@ const Header = (props) => {
                             <MenuItem>
                                 {authed ? (
                                     <div onClick={() => handleUserLogout(true)}>
-                                        {" "}
-                                        Logout{" "}
+                                        Logout
                                     </div>
                                 ) : (
                                     <div
                                         onClick={() => handleUserLogout(false)}>
-                                        {" "}
-                                        Login{" "}
+                                        Login
                                     </div>
                                 )}
                             </MenuItem>

@@ -55,10 +55,10 @@ const SignIn = (props) => {
     const handleUserAuth = async () => {
         dispatch({ type: LOADING, payload: true });
         const user = await getUserInfo();
-        dispatch({ type: LOG_USER, payload: user });
-        localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("authed", true);
-        props.history.push("/");
+        localStorage.setItem("user", JSON.stringify(user));
+        dispatch({ type: LOG_USER, payload: user });
+        props.history.push("/rewards-store/");
         dispatch({ type: LOADING, payload: false });
     };
     return (
