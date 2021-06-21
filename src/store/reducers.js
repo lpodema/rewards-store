@@ -17,7 +17,7 @@ const Reducer = (state, action) => {
         case LOG_USER:
             return {
                 ...state,
-                loggedIn: true,
+                authed: true,
                 user: {
                     name: action.payload.name,
                     points: action.payload.points,
@@ -26,7 +26,7 @@ const Reducer = (state, action) => {
         case LOGOUT_USER:
             return {
                 ...state,
-                loggedIn: false,
+                authed: false,
                 user: null,
             };
 

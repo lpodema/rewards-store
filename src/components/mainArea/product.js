@@ -111,31 +111,30 @@ const Product = (props) => {
                                 justify='center'>
                                 <Grid item>
                                     <Typography variant='body2'>
-                                        You need {cost - user.points} more coins
+                                        You're lacking {cost - user.points}
                                     </Typography>
                                 </Grid>
                                 <Grid item>
                                     <Icon>
-                                        <img
-                                            src={coin}
-                                            alt={coin}
-                                        />
+                                        <img src={coin} alt={coin} />
                                     </Icon>
                                 </Grid>
                             </Grid>
                         </Box>
                     ) : (
-                        <Box top='5%' right='5%' position='absolute'>
-                            <Box>
-                                <Icon>
-                                    <img
-                                        src={bag}
-                                        alt={bag}
-                                        height={"100%"}
-                                        width={"100%"}
-                                    />
-                                </Icon>
-                            </Box>
+                        <Box
+                            top='5%'
+                            right='5%'
+                            position='absolute'
+                            zIndex={1000}>
+                            <Icon>
+                                <img
+                                    src={bag}
+                                    alt={bag}
+                                    height={"100%"}
+                                    width={"100%"}
+                                />
+                            </Icon>
                         </Box>
                     )}
                     <CardContent>
@@ -178,7 +177,6 @@ const Product = (props) => {
                         <Grid
                             container
                             direction='column'
-                            justify='space-around'
                             alignItems='center'
                             style={{ marginTop: "6rem" }}>
                             <Grid item>
@@ -211,9 +209,11 @@ const Product = (props) => {
                                         backgroundColor: "white",
                                         width: "100%",
                                         borderRadius: 10,
-                                        border: "2px solid #000",
+                                        border: "2px solid #4A4A4A",
+                                        paddingLeft: "2rem",
+                                        paddingRight: "2rem",
                                     }}>
-                                    <Typography variant='h6'>
+                                    <Typography variant='body1'>
                                         Redeem Now
                                     </Typography>
                                 </Button>

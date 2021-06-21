@@ -1,11 +1,7 @@
-import {
-    Switch,
-    Route,
-    Redirect,
-} from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Main from "./components/mainArea/main";
 import ProfileArea from "./components/userArea/profileArea";
-import LoggingIn from "./components/loggingin";
+import LoggingIn from "./components/loggingIn";
 
 const LoggedInRoute = ({ component: Component, authed, ...rest }) => {
     return (
@@ -27,7 +23,7 @@ const LoggedInRoute = ({ component: Component, authed, ...rest }) => {
     );
 };
 const Routing = () => {
-    const authed = localStorage.getItem("loggedIn") === "true";
+    const authed = localStorage.getItem("authed") === "true";
     return (
         <Switch>
             <LoggedInRoute
@@ -38,6 +34,11 @@ const Routing = () => {
             <Route path='/login'>
                 <LoggingIn />
             </Route>
+            <LoggedInRoute
+                authed={authed}
+                path='/reward-store'
+                component={Main}
+            />
             {authed ? (
                 <LoggedInRoute
                     authed={authed}

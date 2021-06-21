@@ -5,9 +5,8 @@ import { useContext, useEffect, useState } from "react";
 import { MenuItem, Menu, Toolbar, AppBar, Icon } from "@material-ui/core";
 import { Grid, makeStyles, Typography, IconButton } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { getUserInfo } from "../../services/services";
 import LoadingModal from "../UI/loadingModal";
-import { LOG_USER, LOGOUT_USER } from "../../utils/constants";
+import { LOGOUT_USER } from "../../utils/constants";
 import { Context } from "../../store/store";
 import { withRouter } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
@@ -24,39 +23,33 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = (props) => {
     const classes = useStyles();
-    const [auth, setAuth] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-    const dispatch = useContext(Context)[1];
+    const [state, dispatch] = useContext(Context);
     const [loadingModal, setLoadingModal] = useState(false);
 
-    const handleUserAuth = async (value) => {
+    const authed = state.authed;
+
+    const handleUserLogout = async (value) => {
         handleClose();
-        setLoadingModal(true);
-        if (value) {
-            localStorage.setItem("loggedIn", true);
-            const user = await getUserInfo();
-            dispatch({ type: LOG_USER, payload: user });
-            localStorage.setItem("user", JSON.stringify(user));
-            props.history.push("/");
-            setAuth(true);
-            setLoadingModal(false);
-        } else {
+        
+        if(value){
+            setLoadingModal(true);
             setTimeout(function () {
-                localStorage.removeItem("loggedIn");
                 dispatch({ type: LOGOUT_USER });
-                setAuth(false);
                 setLoadingModal(false);
                 localStorage.clear();
                 props.history.push("/login");
             }, 2000);
+
+        }else{
+            props.history.push("/login");
         }
     };
 
     useEffect(() => {
         const user = localStorage.getItem("user");
         if (user) {
-            setAuth(true);
         }
         return () => {};
     }, [dispatch]);
@@ -85,7 +78,7 @@ const Header = (props) => {
                             </Typography>
                         </Grid>
                     </Grid>
-                    {auth ? <UserInfo /> : null}
+                    {authed ? <UserInfo /> : null}
                     <div>
                         <IconButton
                             aria-label='account of current user'
@@ -93,7 +86,7 @@ const Header = (props) => {
                             aria-haspopup='true'
                             onClick={handleMenu}
                             color='inherit'>
-                            <AccountCircle />
+                            <AccountCircle fontSize='large' />
                         </IconButton>
                         <Menu
                             id='menu-appbar'
@@ -127,11 +120,11 @@ const Header = (props) => {
                                     Profile
                                 </MenuItem>
                             </Link>
-                            <MenuItem onClick={() => handleUserAuth(!auth)}>
-                                {auth ? (
-                                    <div> Logout </div>
+                            <MenuItem >
+                                {authed ? (
+                                    <div onClick={() => handleUserLogout(true)}> Logout </div>
                                 ) : (
-                                    <div> Login </div>
+                                    <div onClick={() => handleUserLogout(false)}> Login </div>
                                 )}
                             </MenuItem>
                         </Menu>
@@ -140,7 +133,7 @@ const Header = (props) => {
             </AppBar>
             <LoadingModal
                 onClose={() => setLoadingModal(false)}
-                val={auth}
+                val={authed}
                 text1='Logging out...'
                 text2='Logging in...'
                 open={loadingModal}
