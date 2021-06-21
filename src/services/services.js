@@ -77,7 +77,6 @@ export const redeemProduct = async (productId) => {
     });
 
     if (response.status === 200) {
-        console.log(response);
         // const content = await response.json();
         // console.log(content);
         return true;

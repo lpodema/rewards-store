@@ -1,6 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
     Redirect,
@@ -8,7 +6,6 @@ import {
 import Main from "./main";
 import ProfileArea from "../userArea/profileArea";
 import LoggingIn from "../loggingin";
-import { Context } from "../../store/store";
 
 const LoggedInRoute = ({ component: Component, authed, ...rest }) => {
     return (
@@ -33,11 +30,6 @@ const Routing = () => {
     const authed = localStorage.getItem("loggedIn") === "true";
     return (
         <Switch>
-            {/* <LoggedInRoute
-                authed={authed}
-                path='/rewards-store'
-                component={Main}
-            /> */}
             <LoggedInRoute
                 authed={authed}
                 path='/profile'

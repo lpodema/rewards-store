@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Grid } from "@material-ui/core";
 import { getHistory } from "../../services/services";
 import { Context } from "../../store/store";
 import { LOADING, UPDATE_HISTORY } from "../../utils/constants";
 import Product from "../UI/product";
 import Pagination from "@material-ui/lab/Pagination";
-import LoadingModal from "../UI/loadingModal";
+import { Typography } from "@material-ui/core";
 
 const RedeemHistory = (props) => {
-    const [state, dispatch] = useContext(Context);
-    const [page, setPage] = React.useState(1);
+    const dispatch = useContext(Context)[1];
+    const [page, setPage] = useState(1);
     const [productHistory, setProductHistory] = useState(null);
     const history = JSON.parse(localStorage.getItem("history"));
 
@@ -36,7 +36,6 @@ const RedeemHistory = (props) => {
                     setProductHistory(history.slice(0 * 20, 1 * 20));
                 }
             }
-            // setLoadingModal(false);
             dispatch({ type: LOADING, payload: false });
         }
         fetchData();
@@ -49,7 +48,7 @@ const RedeemHistory = (props) => {
             direction='column'
             alignItems='stretch'
             justify='center'>
-            <Grid item>Redeem history</Grid>
+            <Grid item><Typography variant="h4" align="center">Redeemed products</Typography></Grid>
             <Grid item>
                 <Grid container justify='center'>
                     {productHistory

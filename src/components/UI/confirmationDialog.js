@@ -1,32 +1,11 @@
-import {
-    Modal,
-    Grid,
-    Card,
-    Button,
-    Typography,
-    Box,
-    Container,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { Grid, Button, Typography } from "@material-ui/core";
 import { Dialog } from "@material-ui/core";
 
-// const useStyles = makeStyles((theme) => ({
-//     paper: {
-//         width: 200,
-//         height: 200,
-//         border: "2px solid #000",
-//         boxShadow: theme.shadows[5],
-//         padding: theme.spacing(2, 4, 3),
-//     },
-// }));
-
 const ConfirmationDialog = (props) => {
-    // const classes = useStyles();
-
     return (
         <Dialog
-            open={props.modal}
-            onClose={() => props.onCloseHandler(false)}
+            open={props.open}
+            onClose={() => props.onClose(false)}
             {...props}
             PaperProps={{
                 style: {
@@ -53,7 +32,7 @@ const ConfirmationDialog = (props) => {
                     <Button
                         variant='contained'
                         color={props.message[2] ? "secondary" : "primary"}
-                        onClick={() => props.onCloseHandler(false)}>
+                        onClick={() => props.onClose(false)}>
                         Accept
                     </Button>
                 </Grid>

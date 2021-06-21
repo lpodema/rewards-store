@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { getProducts, redeemProduct } from "../../services/services";
+import { getProducts } from "../../services/services";
 import { Context } from "../../store/store";
 import Footer from "../footer";
 import ProductsContainer from "./productsContainer";
-import { Line, VerticalLine } from "../UI/lines";
+import { VerticalLine } from "../UI/lines";
 import {
     Chip,
     IconButton,
@@ -96,8 +96,7 @@ const Main = () => {
     return (
         <>
             <Banner />
-            <Container maxWidth='lg' disableGutters={true}>
-                {/* <SortContainer> */}
+            <Container maxWidth='lg' disableGutters={false}>
                 <Grid
                     container
                     direction='column'
@@ -121,10 +120,6 @@ const Main = () => {
                                             color='textPrimary'>
                                             {quantities[0]} of {quantities[1]}{" "}
                                             products
-                                            {/* <ProductQuantity
-                                quantities={quantities}
-                                isForFooter={false}
-                            /> */}
                                         </Typography>
                                     </Grid>
                                     <Grid item lg={1}>
@@ -147,7 +142,7 @@ const Main = () => {
                                                 style={{
                                                     paddingTop: "0.5rem",
                                                 }}>
-                                                Cost: from {range[0]} to{" "}
+                                                Value: from {range[0]} to{" "}
                                                 {range[1]} coins
                                             </Typography>
                                             <Slider
@@ -173,8 +168,7 @@ const Main = () => {
                                                 onChange={handleChangeMultiple}
                                                 input={<Input />}
                                                 renderValue={(selected) => (
-                                                    <div /*className={classes.chips}*/
-                                                    >
+                                                    <div>
                                                         {selected.map(
                                                             (value) => (
                                                                 <Chip
@@ -182,19 +176,15 @@ const Main = () => {
                                                                     label={
                                                                         value
                                                                     }
-                                                                    /*className={classes.chip}*/
                                                                 />
                                                             )
                                                         )}
                                                     </div>
-                                                )} /*MenuProps={MenuProps}*/
-                                            >
+                                                )}>
                                                 {categories.map((name) => (
                                                     <MenuItem
                                                         key={name}
-                                                        value={name}
-                                                        // style={getStyles(name, personName, theme)}
-                                                    >
+                                                        value={name}>
                                                         {name}
                                                     </MenuItem>
                                                 ))}
@@ -205,7 +195,6 @@ const Main = () => {
                                         </FormControl>
                                     </Grid>
                                 </Grid>
-                                {/* </FilterOptions> */}
                             </Grid>
                             <Grid item lg={1}>
                                 <Grid
@@ -238,11 +227,7 @@ const Main = () => {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item>
-                        <Line />
-                    </Grid>
                 </Grid>
-                {/* </SortContainer> */}
                 <ProductsContainer />
                 <Footer />
             </Container>

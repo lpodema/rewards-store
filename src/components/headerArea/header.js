@@ -127,17 +127,27 @@ const Header = (props) => {
                                 }}
                                 open={open}
                                 onClose={handleClose}>
-                                <Link to='/'>
+                                <Link
+                                    to='/'
+                                    style={{
+                                        textDecoration: "none",
+                                        color: " #202020",
+                                    }}>
                                     <MenuItem onClick={handleClose}>
                                         Home
                                     </MenuItem>
                                 </Link>
-                                <Link to='/profile'>
+                                <Link
+                                    to='/profile'
+                                    style={{
+                                        textDecoration: "none",
+                                        color: " #202020",
+                                    }}>
                                     <MenuItem onClick={handleClose}>
                                         Profile
                                     </MenuItem>
                                 </Link>
-                                <MenuItem onClick={() => handleUserAuth(!auth)}>
+                                <MenuItem onClick={() => handleUserAuth(!auth)} >
                                     {auth ? (
                                         <div> Logout </div>
                                     ) : (

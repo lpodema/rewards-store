@@ -99,7 +99,7 @@ const Reducer = (state, action) => {
             //     history: action.payload,
             // };
             return {
-                state,
+                ...state,
             };
 
         case LOADING:

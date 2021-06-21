@@ -1,27 +1,17 @@
 import React from "react";
 import {
-    Button,
     Card,
     CardActionArea,
-    CardActions,
     CardContent,
     CardMedia,
     Grid,
-    makeStyles,
     Paper,
     Typography,
 } from "@material-ui/core";
 import { Line } from "../UI/lines";
 
-const useStyles = makeStyles({
-    root: {
-        // padding: "1rem",
-    },
-});
-
 const Product = (props) => {
-    const { _id, img, name, cost, category, createDate } = props.product;
-    const classes = useStyles();
+    const { img, name, category, createDate } = props.product;
 
     //los enlaces de la api no funcionan para obtener las imaǵenes correctamente
     const getImage = (url) => {
@@ -40,7 +30,7 @@ const Product = (props) => {
     };
     return (
         <Paper elevation={3}>
-            <Card className={classes.root}>
+            <Card>
                 <CardActionArea>
                     <CardMedia
                         component='img'
@@ -82,15 +72,6 @@ const Product = (props) => {
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            {/* <Grid item>
-                                <Grid container justify='flex-end'>
-                                    <CardActions>
-                                        <Button size='small' color='primary'>
-                                            
-                                        </Button>
-                                    </CardActions>
-                                </Grid>
-                            </Grid> */}
                         </Grid>
                     </CardContent>
                 </CardActionArea>

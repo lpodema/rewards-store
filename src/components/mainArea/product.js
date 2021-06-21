@@ -12,13 +12,12 @@ import {
     SET_ERROR,
     UPDATE_POINTS,
 } from "../../utils/constants";
-import { ButtonBase, Icon, Paper, SvgIcon } from "@material-ui/core";
+import { Icon, Paper } from "@material-ui/core";
 import RedeemProductModal from "./redeemModal";
 import {
     Button,
     Card,
     CardActionArea,
-    CardActions,
     CardContent,
     CardMedia,
     Grid,
@@ -43,30 +42,26 @@ const Product = (props) => {
     const classes = useStyles();
     const { _id, img, name, cost, category } = props.product;
     const { user } = useContext(Context)[0];
-    const [state, dispatch] = useContext(Context);
+    const dispatch = useContext(Context)[1];
 
     const [hover, setHover] = useState(false);
-    const [opac, setOpac] = useState(0);
     const [bag, setBag] = useState(bluebag);
     const [dialog, setDialog] = useState(false);
-    const [message, setMessage] = useState(["success", false]);
+    const [message, setMessage] = useState(["", "", false]);
 
     const handleMouse = (value) => {
         setHover(value);
-        hover ? setOpac(0) : setOpac(0.5);
         hover ? setBag(bluebag) : setBag(whitebag);
     };
-    const [modal, setModal] = useState(false);
+    const [redeemModal, setRedeemModal] = useState(false);
 
     const handleRedeem = async (value) => {
-        console.log("entró al redeem", value);
         dispatch({ type: LOADING, payload: true });
         const result = await redeemProduct(value);
 
         //TODO agregar un cartel que avise SUCCESS/ERROR
-        console.log(result);
         if (result) {
-            setModal(false);
+            setRedeemModal(false);
             dispatch({ type: REDEEM_PROD });
             dispatch({ type: UPDATE_POINTS, payload: user.points - cost });
             localStorage.removeItem("history");
@@ -81,7 +76,7 @@ const Product = (props) => {
                 type: SET_ERROR,
                 payload: "Error adding product to collection",
             });
-            setModal(false);
+            setRedeemModal(false);
             setMessage(["Error adding ", " to collection...", true]);
             setDialog(true);
         }
@@ -99,8 +94,6 @@ const Product = (props) => {
                     <CardMedia
                         component='img'
                         alt={name + category}
-                        // height='10%'
-                        // width={10}
                         image={img.url}
                         title={name + category}
                         // zIndex={10}
@@ -118,13 +111,14 @@ const Product = (props) => {
                                 justify='center'>
                                 <Grid item>
                                     <Typography variant='body2'>
-                                        Te faltan {cost - user.points}
+                                        You need {cost - user.points} more coins
                                     </Typography>
                                 </Grid>
                                 <Grid item>
                                     <Icon>
                                         <img
                                             src={coin}
+                                            alt={coin}
                                             // height={"30%"}
                                             // width={"30%"}
                                         />
@@ -133,11 +127,12 @@ const Product = (props) => {
                             </Grid>
                         </Box>
                     ) : (
-                        <Box container top='5%' right='5%' position='absolute'>
-                            <Box item>
+                        <Box top='5%' right='5%' position='absolute'>
+                            <Box>
                                 <Icon>
                                     <img
                                         src={bag}
+                                        alt={bag}
                                         height={"100%"}
                                         width={"100%"}
                                     />
@@ -160,10 +155,8 @@ const Product = (props) => {
                                             style={{ marginTop: "0.8rem" }}
                                             color='textSecondary'>
                                             {category}
-                                            {/* Laptops */}
                                         </Typography>
                                         <Typography variant='subtitle1'>
-                                            {/* Macbook Pro */}
                                             {name}
                                         </Typography>
                                     </Grid>
@@ -173,7 +166,6 @@ const Product = (props) => {
                     </CardContent>
                 </CardActionArea>
                 {hover && !notEnough ? (
-                    // {true && !notEnough ? (
                     <Box
                         position='absolute'
                         top={0}
@@ -200,6 +192,7 @@ const Product = (props) => {
                                         <Icon>
                                             <img
                                                 src={coin}
+                                                alt={coin}
                                                 height='100%'
                                                 width='100%'
                                                 // height={"30%"}
@@ -212,7 +205,7 @@ const Product = (props) => {
                             <Grid item>
                                 <Button
                                     value={_id}
-                                    onClick={() => setModal(true)}
+                                    onClick={() => setRedeemModal(true)}
                                     variant='contained'
                                     style={{
                                         backgroundColor: "white",
@@ -228,14 +221,13 @@ const Product = (props) => {
                 ) : null}
             </Card>
             <RedeemProductModal
-                onCloseHandler={() => setModal(false)}
-                modal={modal}
-                product={props.product}
-                onClickHandler={handleRedeem}
+                onClose={() => setRedeemModal(false)}
+                open={redeemModal}
+                product={[props.product, handleRedeem]}
             />
             <ConfirmationDialog
-                onCloseHandler={() => setDialog(false)}
-                modal={dialog}
+                onClose={() => setDialog(false)}
+                open={dialog}
                 message={message}
                 variable={name}
             />

@@ -1,37 +1,12 @@
-import { POINTS_BUTTONS, REDEEM_PROD } from "../../utils/constants";
-import {
-    Modal,
-    Grid,
-    Card,
-    Button,
-    Typography,
-    Box,
-    Container,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { useContext, useState } from "react";
-import { addPoints, redeemProduct } from "../../services/services";
-import { Context } from "../../store/store";
+import { Button, Box } from "@material-ui/core";
 import { Dialog } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        width: 200,
-        height: 200,
-        border: "2px solid #000",
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
-}));
-
 const RedeemProductModal = (props) => {
-    const classes = useStyles();
-
-    const product = props.product;
+    const [product, redeeming] = props.product;
     return (
         <Dialog
-            open={props.modal}
-            onClose={() => props.onCloseHandler(false)}
+            open={props.open}
+            onClose={() => props.onClose(false)}
             {...props}
             PaperProps={{
                 style: {
@@ -46,10 +21,9 @@ const RedeemProductModal = (props) => {
                     style={{ width: "100%" }}
                     variant='contained'
                     color='secondary'
-                    onClick={() => props.onClickHandler(product._id)}>
+                    onClick={() => redeeming(product._id)}>
                     Get {product.name}!
                 </Button>
-                {/* </Box> */}
             </Box>
         </Dialog>
     );

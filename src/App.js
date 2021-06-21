@@ -1,6 +1,4 @@
 import Header from "./components/headerArea/header";
-import styled from "styled-components";
-
 import theme from "./components/UI/theme";
 import { ThemeProvider } from "@material-ui/core";
 import Routing from "./components/mainArea/routing";
@@ -8,12 +6,6 @@ import { Context } from "./store/store";
 import { useContext, useEffect } from "react";
 import { LOADING, LOG_USER } from "./utils/constants";
 import LoadingModal from "./components/UI/loadingModal";
-
-const AppStyled = styled.div`
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-`;
 
 function App() {
     const [state, dispatch] = useContext(Context);
@@ -37,9 +29,9 @@ function App() {
             <Header /> <Routing />
             <LoadingModal
                 open={state.loading}
-                onClonse={() => dispatch({ TYPE: LOADING, payload: false })}
-                val={true}
-                text1='Loading...'
+                onClose={() => dispatch({ TYPE: LOADING, payload: false })}
+                // val={true}
+                text2='Loading...'
             />
         </ThemeProvider>
     );

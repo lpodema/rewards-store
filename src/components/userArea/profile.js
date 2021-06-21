@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import {
     CardActionArea,
     CardActions,
     CardContent,
-    CardMedia,
     Grid,
 } from "@material-ui/core";
 import { Card, Typography } from "@material-ui/core";

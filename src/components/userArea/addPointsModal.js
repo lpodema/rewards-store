@@ -1,10 +1,7 @@
-import styled from "styled-components";
 import { LOADING, POINTS_BUTTONS, UPDATE_POINTS } from "../../utils/constants";
 import {
     Modal,
     Grid,
-    Card,
-    Dialog,
     Button,
     Typography,
 } from "@material-ui/core";
@@ -12,7 +9,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useContext, useState } from "react";
 import { addPoints } from "../../services/services";
 import { Context } from "../../store/store";
-import ConfirmationDialog from "../UI/confirmationDialog";
 
 function getModalStyle() {
     const top = 50;
@@ -34,14 +30,11 @@ const useStyles = makeStyles((theme) => ({
         border: "2px solid #000",
         boxShadow: theme.shadows[5],
         padding: "2rem",
-        // padding: theme.spacing(2, 4, 3),
     },
 }));
 
 const AddPointsModal = (props) => {
     const [state, dispatch] = useContext(Context);
-    const [confirmation, setConfirmation] = useState(false);
-    const [points, setPoints] = useState();
 
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
@@ -51,8 +44,6 @@ const AddPointsModal = (props) => {
         await dispatch({ type: UPDATE_POINTS, payload: newAmount });
         const user = { name: state.user.name, points: newAmount };
         localStorage.setItem("user", JSON.stringify(user));
-        setPoints(newAmount);
-        //TODO agregar un cartel que avise SUCCESS/ERROR
         props.onCloseHandler(false);
         dispatch({ type: LOADING, payload: false });
     };
