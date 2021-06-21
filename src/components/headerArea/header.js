@@ -32,8 +32,8 @@ const Header = (props) => {
 
     const handleUserLogout = async (value) => {
         handleClose();
-        
-        if(value){
+
+        if (value) {
             setLoadingModal(true);
             setTimeout(function () {
                 dispatch({ type: LOGOUT_USER });
@@ -41,8 +41,7 @@ const Header = (props) => {
                 localStorage.clear();
                 props.history.push("/login");
             }, 2000);
-
-        }else{
+        } else {
             props.history.push("/login");
         }
     };
@@ -74,7 +73,7 @@ const Header = (props) => {
                         </Grid>
                         <Grid item>
                             <Typography variant='h6' className={classes.title}>
-                                Reward Store
+                                Rewards Store
                             </Typography>
                         </Grid>
                     </Grid>
@@ -120,11 +119,18 @@ const Header = (props) => {
                                     Profile
                                 </MenuItem>
                             </Link>
-                            <MenuItem >
+                            <MenuItem>
                                 {authed ? (
-                                    <div onClick={() => handleUserLogout(true)}> Logout </div>
+                                    <div onClick={() => handleUserLogout(true)}>
+                                        {" "}
+                                        Logout{" "}
+                                    </div>
                                 ) : (
-                                    <div onClick={() => handleUserLogout(false)}> Login </div>
+                                    <div
+                                        onClick={() => handleUserLogout(false)}>
+                                        {" "}
+                                        Login{" "}
+                                    </div>
                                 )}
                             </MenuItem>
                         </Menu>

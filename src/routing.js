@@ -12,6 +12,7 @@ const LoggedInRoute = ({ component: Component, authed, ...rest }) => {
                     <Component {...props} />
                 ) : (
                     <Redirect
+                        from='*'
                         to={{
                             pathname: "/login",
                             state: { from: props.location },
@@ -36,18 +37,13 @@ const Routing = () => {
             </Route>
             <LoggedInRoute
                 authed={authed}
-                path='/reward-store'
+                path='/rewards-store'
                 component={Main}
             />
             {authed ? (
-                <LoggedInRoute
-                    authed={authed}
-                    exact={true}
-                    path='/'
-                    component={Main}
-                />
+                <LoggedInRoute authed={authed} path='/' component={Main} />
             ) : (
-                <Route exact={true} path='/'>
+                <Route path='/'>
                     <LoggingIn />
                 </Route>
             )}

@@ -1,6 +1,6 @@
 {
-    "short_name": "Reward Store",
-    "name": "Emanuel Porres' Reward Store",
+    "short_name": "Rewards Store",
+    "name": "Emanuel Porres' Rewards Store",
     "start_url": ".",
     "display": "standalone",
     "theme_color": "#000000",
