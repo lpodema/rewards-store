@@ -1,10 +1,18 @@
 import styled from "styled-components";
-import { POINTS_BUTTONS, UPDATE_POINTS } from "../../utils/constants";
-import { Modal, Grid, Card, Button, Typography } from "@material-ui/core";
+import { LOADING, POINTS_BUTTONS, UPDATE_POINTS } from "../../utils/constants";
+import {
+    Modal,
+    Grid,
+    Card,
+    Dialog,
+    Button,
+    Typography,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useContext, useState } from "react";
 import { addPoints } from "../../services/services";
 import { Context } from "../../store/store";
+import ConfirmationDialog from "../UI/confirmationDialog";
 
 function getModalStyle() {
     const top = 50;
@@ -30,60 +38,23 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ModalContainer = styled.div`
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: 18rem;
-    background-color: red;
-    /* text-align: center; */
-    display: flex;
-    flex-direction: row;
-`;
-
-const CloseButton = styled.button`
-    position: absolute;
-    top: 0;
-    right: 0;
-    /* height: 1rem; */
-    /* width: 1rem; */
-    padding: 0.6rem 1rem;
-    background-color: purple;
-    vertical-align: middle;
-`;
-
-const AddPointsButton = styled.button`
-    width: 33.3%;
-    /* height: 1rem; */
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    background-color: green;
-    align-self: flex-end;
-    /* vertical-align: text-top; */
-    z-index: 1000;
-`;
-const Title = styled.h3`
-    position: absolute;
-    top: -20px;
-    left: 0;
-    width: 100%;
-    /* height: 1rem; */
-    padding: 0.6rem 2.5rem;
-    white-space: nowrap;
-    background-color: yellow;
-`;
-
 const AddPointsModal = (props) => {
     const [state, dispatch] = useContext(Context);
+    const [confirmation, setConfirmation] = useState(false);
+    const [points, setPoints] = useState();
 
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
     const onClickHandler = async (amount) => {
+        dispatch({ type: LOADING, payload: true });
         const newAmount = await addPoints(amount);
-        dispatch({ type: UPDATE_POINTS, payload: newAmount });
+        await dispatch({ type: UPDATE_POINTS, payload: newAmount });
+        const user = { name: state.user.name, points: newAmount };
+        localStorage.setItem("user", JSON.stringify(user));
+        setPoints(newAmount);
         //TODO agregar un cartel que avise SUCCESS/ERROR
         props.onCloseHandler(false);
+        dispatch({ type: LOADING, payload: false });
     };
 
     return (
@@ -96,12 +67,14 @@ const AddPointsModal = (props) => {
                 style={modalStyle}
                 container
                 className={classes.paper}
-                justify='space-around'
+                justify='space-evenly'
                 alignItems='stretch'
                 spacing={0}
                 direction='column'>
                 <Grid item>
-                    <Typography>Add points</Typography>
+                    <Typography variant='h4' align='center'>
+                        Add more coins...
+                    </Typography>
                 </Grid>
                 <Grid item>
                     <Grid container direction='row'>
@@ -114,7 +87,9 @@ const AddPointsModal = (props) => {
                                     onClick={() =>
                                         onClickHandler(button.value)
                                     }>
-                                    {button.text}
+                                    <Typography variant='h6' align='center'>
+                                        {button.text}
+                                    </Typography>
                                 </Button>
                             </Grid>
                         ))}

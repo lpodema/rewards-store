@@ -9,6 +9,7 @@ import {
     UPDATE_HISTORY,
     SET_ERROR,
     LOGOUT_USER,
+    LOADING,
 } from "../utils/constants";
 
 const Reducer = (state, action) => {
@@ -99,6 +100,12 @@ const Reducer = (state, action) => {
             // };
             return {
                 state,
+            };
+
+        case LOADING:
+            return {
+                ...state,
+                loading: action.payload,
             };
 
         default:

@@ -1,5 +1,4 @@
 import Header from "./components/headerArea/header";
-import Main from "./components/mainArea/main";
 import styled from "styled-components";
 
 import theme from "./components/UI/theme";
@@ -7,14 +6,8 @@ import { ThemeProvider } from "@material-ui/core";
 import Routing from "./components/mainArea/routing";
 import { Context } from "./store/store";
 import { useContext, useEffect } from "react";
-import { LOG_USER } from "./utils/constants";
-// import {
-//     getProducts,
-//     addPoints,
-//     getUserInfo,
-//     getHistory,
-//     redeemProduct,
-// } from "./services/services";
+import { LOADING, LOG_USER } from "./utils/constants";
+import LoadingModal from "./components/UI/loadingModal";
 
 const AppStyled = styled.div`
     margin: 0;
@@ -24,27 +17,30 @@ const AppStyled = styled.div`
 
 function App() {
     const [state, dispatch] = useContext(Context);
-
     useEffect(() => {
         async function loggingIn() {
             const user = await localStorage.getItem("user");
             if (user) {
-               await dispatch({ type: LOG_USER, payload: await JSON.parse(user) });
+                dispatch({ type: LOADING, payload: true });
+                await dispatch({
+                    type: LOG_USER,
+                    payload: await JSON.parse(user),
+                });
+                dispatch({ type: LOADING, payload: false });
             }
         }
         loggingIn();
         return () => {};
     }, [dispatch]);
-    // getProducts();
-    // addPoints(5000);
-    // getUserInfo();
-    // getHistory();
-    // redeemProduct("5a0b36ac734d1d08bf70856c");
     return (
         <ThemeProvider theme={theme}>
-            <AppStyled>
-                <Header /> <Routing />
-            </AppStyled>
+            <Header /> <Routing />
+            <LoadingModal
+                open={state.loading}
+                onClonse={() => dispatch({ TYPE: LOADING, payload: false })}
+                val={true}
+                text1='Loading...'
+            />
         </ThemeProvider>
     );
 }

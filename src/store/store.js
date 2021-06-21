@@ -8,9 +8,10 @@ const initialState = {
     productsToShow: [],
     productsFiltered: [],
     filters: [],
-    range: [50, 2500],
+    range: [],
     page: 1,
     history: [],
+    loading: false,
 };
 
 export const Context = createContext(initialState);

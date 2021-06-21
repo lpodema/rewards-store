@@ -6,9 +6,6 @@ import {
     CardMedia,
     Grid,
 } from "@material-ui/core";
-import { Context } from "../../store/store";
-import { LOG_USER, UPDATE_HISTORY } from "../../utils/constants";
-import LoadingModal from "../UI/loadingModal";
 import { Card, Typography } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -89,12 +86,17 @@ const Profile = (props) => {
                                 alignItems='center'>
                                 <CardActions>
                                     <Grid item>
-                                        <Button size='small' color='primary'>
+                                        <Button
+                                            size='small'
+                                            variant='contained'
+                                            color='primary'
+                                            disabled={true}>
                                             View Personal Data
                                         </Button>
                                     </Grid>
                                     <Grid item>
                                         <Button
+                                            variant='contained'
                                             size='small'
                                             color='primary'
                                             onClick={() => handleModal(true)}>

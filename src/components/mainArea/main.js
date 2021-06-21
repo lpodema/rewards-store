@@ -138,23 +138,28 @@ const Main = () => {
                                     alignItems='center'
                                     justify='space-around'>
                                     <Grid item lg={5}>
-                                        <Typography
-                                            variant='subtitle1'
-                                            noWrap={false}
-                                            align='center'
-                                            color='textPrimary'
-                                            style={{ paddingTop: "0.5rem" }}>
-                                            Price range
-                                        </Typography>
-                                        <Slider
-                                            value={range}
-                                            onChange={onChangeHandlerRange}
-                                            valueLabelDisplay='auto'
-                                            aria-labelledby='range-slider'
-                                            max={minMax[1]}
-                                            min={minMax[0]}
-                                            step={50}
-                                        />
+                                        <Grid container direction='column'>
+                                            <Typography
+                                                variant='subtitle1'
+                                                noWrap={false}
+                                                align='center'
+                                                color='textPrimary'
+                                                style={{
+                                                    paddingTop: "0.5rem",
+                                                }}>
+                                                Cost: from {range[0]} to{" "}
+                                                {range[1]} coins
+                                            </Typography>
+                                            <Slider
+                                                value={range}
+                                                onChange={onChangeHandlerRange}
+                                                valueLabelDisplay='auto'
+                                                aria-labelledby='range-slider'
+                                                max={minMax[1]}
+                                                min={minMax[0]}
+                                                step={50}
+                                            />
+                                        </Grid>
                                     </Grid>
                                     <Grid item lg={5}>
                                         <FormControl
@@ -163,8 +168,6 @@ const Main = () => {
                                                 height: "2rem",
                                             }}>
                                             <Select
-                                                labelId='demo-mutiple-chip-label'
-                                                id='demo-mutiple-chip'
                                                 multiple
                                                 value={filter}
                                                 onChange={handleChangeMultiple}
@@ -211,7 +214,7 @@ const Main = () => {
                                     justify='flex-end'>
                                     <IconButton
                                         color='primary'
-                                        aria-label='add to shopping cart'
+                                        aria-label='back'
                                         onClick={() => onClickHandler(-1)}
                                         disabled={
                                             state.page === 1 ||
@@ -221,7 +224,7 @@ const Main = () => {
                                     </IconButton>
                                     <IconButton
                                         color='primary'
-                                        aria-label='add to shopping cart'
+                                        aria-label='next'
                                         onClick={() => onClickHandler(1)}
                                         disabled={
                                             state.page * 16 >=

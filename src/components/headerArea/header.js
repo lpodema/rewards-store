@@ -62,7 +62,7 @@ const Header = (props) => {
             const user = await getUserInfo();
             dispatch({ type: LOG_USER, payload: user });
             localStorage.setItem("user", JSON.stringify(user));
-            props.history.push("/rewards-store");
+            props.history.push("/");
             setAuth(true);
             setLoadingModal(false);
         } else {
@@ -80,7 +80,6 @@ const Header = (props) => {
     useEffect(() => {
         const user = localStorage.getItem("user");
         if (user) {
-            // dispatch({ type: LOG_USER, payload: JSON.parse(user) });
             setAuth(true);
         }
         return () => {};
@@ -94,8 +93,6 @@ const Header = (props) => {
         setAnchorEl(null);
     };
 
-  
-
     return (
         <HeaderContainer>
             <div>
@@ -105,7 +102,8 @@ const Header = (props) => {
                         <Typography variant='h6' className={classes.title}>
                             Reward Store
                         </Typography>
-                        <UserInfo />
+                        {auth ? <UserInfo /> : null}
+
                         <div>
                             <IconButton
                                 aria-label='account of current user'
@@ -129,7 +127,7 @@ const Header = (props) => {
                                 }}
                                 open={open}
                                 onClose={handleClose}>
-                                <Link to='/rewards-store'>
+                                <Link to='/'>
                                     <MenuItem onClick={handleClose}>
                                         Home
                                     </MenuItem>

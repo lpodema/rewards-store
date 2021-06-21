@@ -28,3 +28,4 @@ export const APPLY_FILTERS = "APPLY_FILTERS";
 export const REDEEM_PROD = "REDEEM_PROD";
 export const UPDATE_HISTORY = "UPDATE_HISTORY";
 export const LOGOUT_USER = "LOGOUT_USER";
+export const LOADING = "LOADING";

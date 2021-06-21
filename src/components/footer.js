@@ -14,8 +14,6 @@ const Footer = () => {
     const quantities = [state.productsToShow.length, state.products.length];
     return (
         <Grid container alignItems='center' justify='space-between'>
-            {/* <div> */}
-            {/* <FooterStyled> */}
             <Grid
                 container
                 direction='row'
@@ -29,10 +27,6 @@ const Footer = () => {
                         color='textPrimary'
                         style={{ marginLeft: "1rem" }}>
                         {quantities[0]} of {quantities[1]} products
-                        {/* <ProductQuantity
-                                quantities={quantities}
-                                isForFooter={false}
-                            /> */}
                     </Typography>
                 </Grid>
                 <Grid item>
@@ -64,9 +58,7 @@ const Footer = () => {
                     </Grid>
                 </Grid>
             </Grid>
-            {/* </FooterStyled> */}
             <Line style={{ margin: "1rem", width: "100%" }} />
-            {/* </div> */}
         </Grid>
     );
 };

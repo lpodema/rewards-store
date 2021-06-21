@@ -47,32 +47,14 @@ const CoinStack = styled.div`
 `;
 
 const UserInfo = () => {
-    const [modal, setModal] = useState(false);
     const [state, dispatch] = useContext(Context);
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const user = await getUserInfo();
-    //         dispatch({ type: LOG_USER, payload: user });
-    //     };
-    //     fetchData();
-    // }, [dispatch]);
-
-    const onClickHandler = async (number) => {
-        const points = await addPoints(number);
-        dispatch({ type: UPDATE_POINTS, payload: points["New Points"] });
-        setModal(false);
-    };
 
     return (
         <InfoArea>
             <Container>
                 <CoinStack>
                     <p>{state.user ? state.user.points : null}</p>
-                    <img
-                        src={coin}
-                        alt={coin}
-                        onClick={() => setModal(!modal)}></img>
+                    <img src={coin} alt={coin} />
                 </CoinStack>
                 <p>{state.user ? state.user.name : "Not logged in"}</p>
             </Container>

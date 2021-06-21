@@ -1,172 +1,58 @@
 import { useContext } from "react";
 import { Context } from "../../store/store";
-import styled from "styled-components";
 import bluebag from "../../assets/icons/buy-blue.svg";
 import whitebag from "../../assets/icons/buy-white.svg";
 import coin from "../../assets/icons/coin.svg";
 import { useState } from "react";
 import { Line } from "../UI/lines";
 import { redeemProduct } from "../../services/services";
-import { REDEEM_PROD, SET_ERROR, UPDATE_POINTS } from "../../utils/constants";
-import { Paper } from "@material-ui/core";
+import {
+    LOADING,
+    REDEEM_PROD,
+    SET_ERROR,
+    UPDATE_POINTS,
+} from "../../utils/constants";
+import { ButtonBase, Icon, Paper, SvgIcon } from "@material-ui/core";
 import RedeemProductModal from "./redeemModal";
+import {
+    Button,
+    Card,
+    CardActionArea,
+    CardActions,
+    CardContent,
+    CardMedia,
+    Grid,
+    makeStyles,
+    Typography,
+} from "@material-ui/core";
+import { Box } from "@material-ui/core";
+import ConfirmationDialog from "../UI/confirmationDialog";
 
-const ProductDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    /* grid-template-columns: repeat(4, 1fr); */
-    /* grid-template-rows: repeat(4, 1fr); */
-    background-color: #ffffff;
-    /* align-items: center; */
-    position: relative;
-    margin: 1rem;
-    box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.1);
-`;
-
-const Category = styled.div`
-    font-family: SourceSansPro-Regular;
-    font-size: 1rem;
-    color: #a3a3a3;
-    letter-spacing: -0.04px;
-    text-align: left;
-    margin: 0 1rem;
-`;
-
-const ArticleTitle = styled.div`
-    font-family: SourceSansPro-Regular;
-    font-size: 1.2rem;
-    color: #616161;
-    letter-spacing: -0.04px;
-    text-align: left;
-    margin: 0 1rem;
-`;
-
-const ShoppingBagStyles = styled.div`
-    /* background: #ffffff; */
-    background: ${(props) => (props.hover ? whitebag : bluebag)};
-    width: 1rem;
-    height: 1rem;
-    border-radius: 100%;
-    position: absolute;
-    top: 1rem;
-    right: 3rem;
-    z-index: 90;
-`;
-
-const SelectedProductDiv = styled.div`
-    background-color: rgba(10, 212, 250, ${(props) => props.opac});
-    z-index: 1;
-    /* align-self: stretch; */
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: 100%;
-    text-align: center;
-`;
-
-const ProductImage = styled.img`
-    z-index: 1;
-    text-align: center;
-    /* position: relative; */
-    /* top: 0; */
-    /* right: 0; */
-    height: 100%;
-    width: 100%;
-`;
-
-const RedeemButton = styled.button`
-    position: absolute;
-    background: #ffffff;
-    margin: 1rem;
-    top: 60%;
-    right: 0;
-    width: 90%;
-    font-family: SourceSansPro-Regular;
-    font-size: 1rem;
-    color: #616161;
-    letter-spacing: -0.04px;
-    text-align: center;
-    height: 2rem;
-    border-radius: 3%;
-`;
-
-const ValueContainer = styled.div`
-    letter-spacing: -0.08px;
-    text-align: center;
-    position: absolute;
-    margin: 0 auto;
-    top: 35%;
-    right: 0%;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0 auto;
-`;
-
-const ValueInCoins = styled.p`
-    font-family: SourceSansPro-Regular;
-    font-size: 2rem;
-    color: #ffffff;
-    margin: 2rem 0 2rem 5rem;
-`;
-
-const CoinIcon = styled.img`
-    height: 10%;
-    width: 10%;
-    margin: 2rem 2rem 2rem 0.8rem;
-`;
-const CoinIcon2 = styled.img`
-    /* height: 10%; */
-    width: 18%;
-    margin: 0 0.3rem;
-`;
-
-const NotEnoughCoins = styled.div`
-    letter-spacing: -0.5px;
-    color: white;
-    font-size: 0.9rem;
-    text-align: center;
-    width: 50%;
-    border-radius: 15px;
-    background-color: rgba(128, 128, 128, 0.7);
-    position: absolute;
-    white-space: nowrap;
-    padding: 0 0.9rem;
-    top: 0rem;
-    right: 0rem;
-    z-index: 90;
-    display: flex;
-    flex-direction: row;
-    vertical-align: center;
-`;
-
-// const NotEnoughContainer = styled.div`
-//     letter-spacing: -0.08px;
-//     text-align: center;
-//     position: absolute;
-//     margin: 0 auto;
-//     top: 35%;
-//     right: 0%;
-//     width: 100%;
-//     display: flex;
-//     flex-direction: row;
-//     align-items: center;
-//     padding: 0 auto;
-// `;
+const useStyles = makeStyles({
+    hover: { backgroundColor: "rgba(10, 212, 250, 0.5) ", zIndex: 40 },
+    needing: {
+        backgroundColor: "rgba(128, 128, 128, 0.7)",
+        padding: "0.5rem",
+        paddingTop: 0,
+        paddingBottom: 0,
+        borderRadius: 20,
+    },
+});
 
 const Product = (props) => {
+    const classes = useStyles();
     const { _id, img, name, cost, category } = props.product;
     const { user } = useContext(Context)[0];
-    const dispatch = useContext(Context)[1];
+    const [state, dispatch] = useContext(Context);
 
     const [hover, setHover] = useState(false);
     const [opac, setOpac] = useState(0);
     const [bag, setBag] = useState(bluebag);
+    const [dialog, setDialog] = useState(false);
+    const [message, setMessage] = useState(["success", false]);
 
-    const handleMouse = () => {
-        setHover(!hover);
+    const handleMouse = (value) => {
+        setHover(value);
         hover ? setOpac(0) : setOpac(0.5);
         hover ? setBag(bluebag) : setBag(whitebag);
     };
@@ -174,70 +60,186 @@ const Product = (props) => {
 
     const handleRedeem = async (value) => {
         console.log("entró al redeem", value);
+        dispatch({ type: LOADING, payload: true });
         const result = await redeemProduct(value);
 
         //TODO agregar un cartel que avise SUCCESS/ERROR
         console.log(result);
         if (result) {
+            setModal(false);
             dispatch({ type: REDEEM_PROD });
             dispatch({ type: UPDATE_POINTS, payload: user.points - cost });
             localStorage.removeItem("history");
-            setModal(false);
+            localStorage.setItem(
+                "user",
+                JSON.stringify({ name: user.name, points: user.points - cost })
+            );
+            setMessage(["Successfully added ", " to collection!", false]);
+            setDialog(true);
         } else {
             dispatch({
                 type: SET_ERROR,
-                payload: "Error en la compra del producto",
+                payload: "Error adding product to collection",
             });
+            setModal(false);
+            setMessage(["Error adding ", " to collection...", true]);
+            setDialog(true);
         }
+        dispatch({ type: LOADING, payload: false });
     };
-
+    const notEnough = user !== null && user.points < cost;
     return (
-        <ProductDiv
-            onMouseEnter={() => handleMouse()}
-            onMouseLeave={() => handleMouse()}>
-            <Paper elevation={3}>
-                {user !== null && user.points < cost ? (
-                    <>
-                        <NotEnoughCoins>
-                            {/* <NotEnoughCoins> */}
-                            <p>Te faltan {user.points - cost}</p>
-                            <CoinIcon2 src={coin} />
-                            {/* </NotEnoughCoins> */}
-                        </NotEnoughCoins>
-                    </>
-                ) : (
-                    <ShoppingBagStyles>
-                        <img src={bag} alt={bag} />
-                    </ShoppingBagStyles>
-                )}
-
-                <ProductImage src={img.url}></ProductImage>
-                <Line />
-                <Category>{category}</Category>
-                <ArticleTitle>{name}</ArticleTitle>
-                <SelectedProductDiv opac={opac}>
-                    {hover ? (
-                        <div>
-                            <ValueContainer>
-                                <ValueInCoins>{cost}</ValueInCoins>
-                                <CoinIcon src={coin}></CoinIcon>
-                            </ValueContainer>
-                            <RedeemButton
-                                value={_id}
-                                onClick={() => setModal(true)}>
-                                Redeem Now
-                            </RedeemButton>
-                        </div>
-                    ) : null}
-                </SelectedProductDiv>
-            </Paper>
+        <Paper
+            elevation={3}
+            style={{ position: "relative" }}
+            onMouseEnter={() => handleMouse(true)}
+            onMouseLeave={() => handleMouse(false)}>
+            <Card>
+                <CardActionArea>
+                    <CardMedia
+                        component='img'
+                        alt={name + category}
+                        // height='10%'
+                        // width={10}
+                        image={img.url}
+                        title={name + category}
+                        // zIndex={10}
+                    />
+                    {notEnough ? (
+                        <Box
+                            container
+                            top={"5%"}
+                            right={"5%"}
+                            position='absolute'
+                            className={classes.needing}>
+                            <Grid
+                                container
+                                alignItems='center'
+                                justify='center'>
+                                <Grid item>
+                                    <Typography variant='body2'>
+                                        Te faltan {cost - user.points}
+                                    </Typography>
+                                </Grid>
+                                <Grid item>
+                                    <Icon>
+                                        <img
+                                            src={coin}
+                                            // height={"30%"}
+                                            // width={"30%"}
+                                        />
+                                    </Icon>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                    ) : (
+                        <Box container top='5%' right='5%' position='absolute'>
+                            <Box item>
+                                <Icon>
+                                    <img
+                                        src={bag}
+                                        height={"100%"}
+                                        width={"100%"}
+                                    />
+                                </Icon>
+                            </Box>
+                        </Box>
+                    )}
+                    <CardContent>
+                        <Grid container direction='column' alignItems='stretch'>
+                            <Grid item>
+                                <Grid
+                                    container
+                                    direction='row'
+                                    justify='space-between'
+                                    alignItems='center'>
+                                    <Grid container direction='column'>
+                                        <Line />
+                                        <Typography
+                                            variant='subtitle2'
+                                            style={{ marginTop: "0.8rem" }}
+                                            color='textSecondary'>
+                                            {category}
+                                            {/* Laptops */}
+                                        </Typography>
+                                        <Typography variant='subtitle1'>
+                                            {/* Macbook Pro */}
+                                            {name}
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </CardContent>
+                </CardActionArea>
+                {hover && !notEnough ? (
+                    // {true && !notEnough ? (
+                    <Box
+                        position='absolute'
+                        top={0}
+                        right={0}
+                        width='100%'
+                        height='100%'
+                        className={classes.hover}>
+                        <Grid
+                            container
+                            direction='column'
+                            justify='space-around'
+                            alignItems='stretch'
+                            style={{ marginTop: "6rem" }}>
+                            <Grid item>
+                                <Grid container justify='center'>
+                                    <Grid item>
+                                        <Typography
+                                            variant='h3'
+                                            style={{ color: "white" }}>
+                                            {cost}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <Icon>
+                                            <img
+                                                src={coin}
+                                                height='100%'
+                                                width='100%'
+                                                // height={"30%"}
+                                                // width={"30%"}
+                                            />
+                                        </Icon>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            <Grid item>
+                                <Button
+                                    value={_id}
+                                    onClick={() => setModal(true)}
+                                    variant='contained'
+                                    style={{
+                                        backgroundColor: "white",
+                                        width: "100%",
+                                        borderRadius: 10,
+                                        border: "2px solid #000",
+                                    }}>
+                                    Redeem Now
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                ) : null}
+            </Card>
             <RedeemProductModal
                 onCloseHandler={() => setModal(false)}
                 modal={modal}
                 product={props.product}
                 onClickHandler={handleRedeem}
             />
-        </ProductDiv>
+            <ConfirmationDialog
+                onCloseHandler={() => setDialog(false)}
+                modal={dialog}
+                message={message}
+                variable={name}
+            />
+        </Paper>
     );
 };
 

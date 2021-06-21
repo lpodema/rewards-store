@@ -1,5 +1,4 @@
 import React from "react";
-import image from "../../assets/product-pics/AcerAspire-x1.png";
 import {
     Button,
     Card,
@@ -58,26 +57,28 @@ const Product = (props) => {
                                     direction='row'
                                     justify='space-between'
                                     alignItems='center'>
-                                        <Grid
-                                            container
-                                            direction='column'
-                                            alignItems='center'>
-                                            <Line />
-                                            <Typography
-                                                variant='subtitle2'
-                                                style={{ marginTop: "0.8rem" }}
-                                                color='textSecondary'>
-                                                {category}
-                                                {/* Laptops */}
-                                            </Typography>
-                                            <Typography variant='subtitle1'>
-                                                {/* Macbook Pro */}
-                                                {name}
-                                            </Typography>
-                                            <Typography variant='body2' align="center">
-                                                Redeemed at: <br />{" "}
-                                                {getDate(createDate)}
-                                            </Typography>
+                                    <Grid
+                                        container
+                                        direction='column'
+                                        alignItems='center'>
+                                        <Line />
+                                        <Typography
+                                            variant='subtitle2'
+                                            style={{ marginTop: "0.8rem" }}
+                                            color='textSecondary'>
+                                            {category}
+                                            {/* Laptops */}
+                                        </Typography>
+                                        <Typography variant='subtitle1'>
+                                            {/* Macbook Pro */}
+                                            {name}
+                                        </Typography>
+                                        <Typography
+                                            variant='body2'
+                                            align='center'>
+                                            Redeemed at: <br />{" "}
+                                            {getDate(createDate)}
+                                        </Typography>
                                     </Grid>
                                 </Grid>
                             </Grid>

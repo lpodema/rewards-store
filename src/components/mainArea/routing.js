@@ -30,14 +30,14 @@ const LoggedInRoute = ({ component: Component, authed, ...rest }) => {
     );
 };
 const Routing = () => {
-    const authed = localStorage.getItem("loggedIn") === "true"
+    const authed = localStorage.getItem("loggedIn") === "true";
     return (
         <Switch>
-            <LoggedInRoute
+            {/* <LoggedInRoute
                 authed={authed}
                 path='/rewards-store'
                 component={Main}
-            />
+            /> */}
             <LoggedInRoute
                 authed={authed}
                 path='/profile'
@@ -46,9 +46,18 @@ const Routing = () => {
             <Route path='/login'>
                 <LoggingIn />
             </Route>
-            <Route exact={true} path='/'>
-                <LoggingIn />
-            </Route>
+            {authed ? (
+                <LoggedInRoute
+                    authed={authed}
+                    exact={true}
+                    path='/'
+                    component={Main}
+                />
+            ) : (
+                <Route exact={true} path='/'>
+                    <LoggingIn />
+                </Route>
+            )}
         </Switch>
     );
 };
