@@ -25,6 +25,7 @@ import {
     CHANGE_PAGE,
 } from "../../utils/constants";
 import Banner from "../headerArea/banner";
+import CancelIcon from "@material-ui/icons/Cancel";
 
 const Main = () => {
     const [state, dispatch] = useContext(Context);
@@ -82,6 +83,17 @@ const Main = () => {
         setFilter(event.target.value);
     };
 
+    const resetFilters = () => {
+        dispatch({
+            type: APPLY_FILTERS,
+            payload: state.products,
+            minMax: minMax,
+            categories: [],
+        });
+        setRange(minMax);
+        setFilter([]);
+    };
+
     const sorted = [
         ...state.products.map((product) => product.cost).sort((a, b) => a - b),
     ];
@@ -123,7 +135,8 @@ const Main = () => {
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            <Grid item lg={8}>
+
+                            <Grid item lg={7}>
                                 <Grid
                                     container
                                     alignItems='center'
@@ -191,6 +204,21 @@ const Main = () => {
                                         </FormControl>
                                     </Grid>
                                 </Grid>
+                            </Grid>
+                            <Grid item lg={1}>
+                                <IconButton
+                                    aria-label='Reset all filters'
+                                    aria-controls='menu-appbar'
+                                    aria-haspopup='true'
+                                    onClick={() => resetFilters()}
+                                    color='inherit'>
+                                    <CancelIcon
+                                        fontSize='large'
+                                        style={{
+                                            color: "#858585",
+                                        }}
+                                    />
+                                </IconButton>
                             </Grid>
                             <Grid item lg={1}>
                                 <Grid

@@ -59,7 +59,6 @@ const Product = (props) => {
         dispatch({ type: LOADING, payload: true });
         const result = await redeemProduct(value);
 
-        //TODO agregar un cartel que avise SUCCESS/ERROR
         if (result) {
             setRedeemModal(false);
             dispatch({ type: REDEEM_PROD });
@@ -96,7 +95,6 @@ const Product = (props) => {
                         alt={name + category}
                         image={img.url}
                         title={name + category}
-                        // zIndex={10}
                     />
                     {notEnough ? (
                         <Box
