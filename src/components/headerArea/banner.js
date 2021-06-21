@@ -1,39 +1,30 @@
-import styled from "styled-components";
+import { Grid, makeStyles, Typography } from "@material-ui/core";
 import image from "../../assets/header-x2.png";
 
-const ImageContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    position: relative;
-`;
-
-const BannerImage = styled.img`
-    width: 100%;
-    height: 100%;
-    margin: auto;
-    display: block;
-
-    overflow: hidden;
-    /* background-image: url; */
-`;
-
-const Category = styled.p`
-    font-family: SourceSansPro-Bold;
-    font-size: 4rem;
-    color: #ffffff;
-    text-align: left;
-    position: absolute;
-    bottom: 3rem;
-    left: 4rem;
-`;
+const useStyles = makeStyles({
+    category:{
+        color: "#ffffff",
+        textAlign:"left",
+        position:"absolute",
+        bottom:"5rem",
+        left:"4rem"
+    },
+    img:{
+        width: "100%",
+        height: "100%",
+        margin: "auto",
+        display: "block",
+        overflow: "hidden"
+    }
+})
 
 const Banner = () => {
+    const classes = useStyles();
     return (
-        <ImageContainer>
-            <BannerImage src={image} />
-            <Category>Electronics</Category>
-        </ImageContainer>
+        <Grid container>
+            <img src={image} className={classes.img} alt={image} />
+            <Typography className={classes.category} variant="h2">Electronics</Typography>
+        </Grid>
     );
 };
 

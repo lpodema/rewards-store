@@ -4,11 +4,11 @@ import {
     CardActionArea,
     CardContent,
     CardMedia,
+    Divider,
     Grid,
     Paper,
     Typography,
 } from "@material-ui/core";
-import { Line } from "../UI/lines";
 
 const Product = (props) => {
     const { img, name, category, createDate } = props.product;
@@ -25,7 +25,6 @@ const Product = (props) => {
         date = date.slice(0, date.length - 4).split(" ");
         let buf = date[0].split("-");
         buf = buf[2] + "/" + buf[1] + "/" + buf[0];
-        // date = date[1]+', '+date[0]
         return buf + ", " + date[1];
     };
     return (
@@ -51,24 +50,37 @@ const Product = (props) => {
                                         container
                                         direction='column'
                                         alignItems='center'>
-                                        <Line />
-                                        <Typography
-                                            variant='subtitle2'
-                                            style={{ marginTop: "0.8rem" }}
-                                            color='textSecondary'>
-                                            {category}
-                                            {/* Laptops */}
-                                        </Typography>
-                                        <Typography variant='subtitle1'>
-                                            {/* Macbook Pro */}
-                                            {name}
-                                        </Typography>
-                                        <Typography
-                                            variant='body2'
-                                            align='center'>
-                                            Redeemed at: <br />{" "}
-                                            {getDate(createDate)}
-                                        </Typography>
+                                        <Grid item>
+                                            <Divider
+                                                variant='fullWidth'
+                                                orientation='horizontal'
+                                                style={{
+                                                    color: "000",
+                                                    margin: "1rem",
+                                                }}
+                                            />
+                                        </Grid>
+                                        <Grid item>
+                                            <Typography
+                                                variant='subtitle2'
+                                                style={{ marginTop: "0.8rem" }}
+                                                color='textSecondary'>
+                                                {category}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item>
+                                            <Typography variant='subtitle1'>
+                                                {name}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item>
+                                            <Typography
+                                                variant='body2'
+                                                align='center'>
+                                                Redeemed at: <br />{" "}
+                                                {getDate(createDate)}
+                                            </Typography>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                             </Grid>

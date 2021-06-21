@@ -3,7 +3,6 @@ import { getProducts } from "../../services/services";
 import { Context } from "../../store/store";
 import Footer from "../footer";
 import ProductsContainer from "./productsContainer";
-import { VerticalLine } from "../UI/lines";
 import {
     Chip,
     IconButton,
@@ -121,9 +120,6 @@ const Main = () => {
                                             {quantities[0]} of {quantities[1]}{" "}
                                             products
                                         </Typography>
-                                    </Grid>
-                                    <Grid item lg={1}>
-                                        <VerticalLine />
                                     </Grid>
                                 </Grid>
                             </Grid>

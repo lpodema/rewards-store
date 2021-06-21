@@ -1,64 +1,52 @@
-import { useContext, useEffect, useState } from "react";
-import styled from "styled-components";
+import { useContext } from "react";
 import coin from "../../assets/icons/coin.svg";
-import { getUserInfo } from "../../services/services";
 import { Context } from "../../store/store";
-import { addPoints } from "../../services/services";
-import { UPDATE_POINTS, LOG_USER } from "../../utils/constants";
+import { Divider, Grid, Icon, makeStyles } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
-const InfoArea = styled.div`
-    /* width: 100%; */
-    /* height: 1rem; */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    position: relative;
-    /* background-color: green; */
-`;
-
-const Container = styled.div`
-    /* width: 100%; */
-    padding: 0 1rem;
-    display: flex;
-    flex-direction: row-reverse;
-    /* background-color: purple; */
-    font-family: SourceSansPro-Regular;
-    font-size: 1.3rem;
-    color: #616161;
-    letter-spacing: -0.15px;
-    line-height: 0rem;
-    text-align: left;
-    margin: 1rem;
-    align-content: space-between;
-    background-color: white;
-    border-radius: 2rem;
-`;
-
-const CoinStack = styled.div`
-    /* width: 100%; */
-    /* padding: 1rem 2rem; */
-    /* height: 3fr; */
-    display: flex;
-    flex-direction: row;
-    /* background-color: #ededed; */
-    border-radius: 1rem;
-    margin: 0 1rem;
-    padding: 0 1rem;
-`;
-
+const useStyles = makeStyles({
+    container: {
+        backgroundColor: "#FFFFFF",
+        width: "30%",
+        lineHeight: "0.5rem",
+        // paddingTop: 10,
+        borderRadius: 20,
+        color: "#3F3F3F",
+    },
+});
 const UserInfo = () => {
-    const [state, dispatch] = useContext(Context);
+    const classes = useStyles();
+    const state = useContext(Context)[0];
 
     return (
-        <InfoArea>
-            <Container>
-                <CoinStack>
-                    <p>{state.user ? state.user.points : null}</p>
-                    <img src={coin} alt={coin} />
-                </CoinStack>
-                <p>{state.user ? state.user.name : "Not logged in"}</p>
-            </Container>
-        </InfoArea>
+        <Grid
+            container
+            direction='row'
+            justify='space-evenly'
+            className={classes.container}>
+            <Grid item>
+                <Typography variant='h5'>
+                    {state.user ? state.user.name : null}
+                </Typography>
+            </Grid>
+            <Grid item>
+                <Divider orientation="vertical" />
+            </Grid>
+            <Grid item>
+                <Grid container direction='row' justify='center'>
+                    <Grid item>
+                        <Typography variant='h5'>
+                            {state.user ? state.user.points : null}
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Icon fontSize='large'>
+                            <img src={coin} alt={coin} />
+                        </Icon>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
     );
 };
 

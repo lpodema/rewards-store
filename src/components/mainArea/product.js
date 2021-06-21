@@ -4,7 +4,6 @@ import bluebag from "../../assets/icons/buy-blue.svg";
 import whitebag from "../../assets/icons/buy-white.svg";
 import coin from "../../assets/icons/coin.svg";
 import { useState } from "react";
-import { Line } from "../UI/lines";
 import { redeemProduct } from "../../services/services";
 import {
     LOADING,
@@ -26,6 +25,7 @@ import {
 } from "@material-ui/core";
 import { Box } from "@material-ui/core";
 import ConfirmationDialog from "../UI/confirmationDialog";
+import { Divider } from "@material-ui/core";
 
 const useStyles = makeStyles({
     hover: { backgroundColor: "rgba(10, 212, 250, 0.5) ", zIndex: 40 },
@@ -149,7 +149,11 @@ const Product = (props) => {
                                     justify='space-between'
                                     alignItems='center'>
                                     <Grid container direction='column'>
-                                        <Line />
+                                        <Divider
+                                            variant='fullWidth'
+                                            orientation='horizontal'
+                                            style={{ color: "000" }}
+                                        />
                                         <Typography
                                             variant='subtitle2'
                                             style={{ marginTop: "0.8rem" }}
