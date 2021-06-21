@@ -211,7 +211,9 @@ const Main = () => {
                                     aria-controls='menu-appbar'
                                     aria-haspopup='true'
                                     onClick={() => resetFilters()}
-                                    color='inherit'>
+                                    color='inherit'
+                                    disabled={state.productsFiltered.length === state.products.length}
+                                    >
                                     <CancelIcon
                                         fontSize='large'
                                         style={{
