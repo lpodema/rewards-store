@@ -94,10 +94,6 @@ const Reducer = (state, action) => {
             };
         case UPDATE_HISTORY:
             localStorage.setItem("history", JSON.stringify(action.payload));
-            // return {
-            //     ...state,
-            //     history: action.payload,
-            // };
             return {
                 ...state,
             };

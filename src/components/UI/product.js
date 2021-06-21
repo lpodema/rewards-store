@@ -13,7 +13,7 @@ import {
 const Product = (props) => {
     const { img, name, category, createDate } = props.product;
 
-    //los enlaces de la api no funcionan para obtener las imaǵenes correctamente
+    //los enlaces de la api no funcionan para obtener las imágenes correctamente por lo ques necesario este método
     const getImage = (url) => {
         return url.replace(
             "https://aerolab-challenge.now.sh",

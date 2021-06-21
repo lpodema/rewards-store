@@ -9,7 +9,6 @@ const useStyles = makeStyles({
         backgroundColor: "#FFFFFF",
         width: "30%",
         lineHeight: "0.5rem",
-        // paddingTop: 10,
         borderRadius: 20,
         color: "#3F3F3F",
     },

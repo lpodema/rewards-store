@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
         position: "absolute",
         width: 300,
         height: 300,
-        // margin: "auto",
         backgroundColor: theme.palette.background.paper,
         border: "2px solid #000",
         boxShadow: theme.shadows[5],
@@ -30,11 +29,9 @@ const useStyles = makeStyles((theme) => ({
 const LoadingModal = (props) => {
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
-    // console.log(props)
     return (
         <Modal
             open={props.open}
-            // onClose={() => props.onClose(false)}
             aria-labelledby='simple-modal-title'
             aria-describedby='simple-modal-description'>
             <Paper elevation={3} style={modalStyle} className={classes.paper}>
@@ -55,8 +52,6 @@ const LoadingModal = (props) => {
                     </Grid>
                 </Grid>
             </Paper>
-            {/* <div style={modalStyle} className={classes.paper}>
-            </div> */}
         </Modal>
     );
 };

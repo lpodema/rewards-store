@@ -12,7 +12,7 @@ import {
     UPDATE_POINTS,
 } from "../../utils/constants";
 import { Icon, Paper } from "@material-ui/core";
-import RedeemProductModal from "./redeemModal";
+import RedeemProductModal from "../UI/redeemModal";
 import {
     Button,
     Card,
@@ -119,8 +119,6 @@ const Product = (props) => {
                                         <img
                                             src={coin}
                                             alt={coin}
-                                            // height={"30%"}
-                                            // width={"30%"}
                                         />
                                     </Icon>
                                 </Grid>
@@ -181,7 +179,7 @@ const Product = (props) => {
                             container
                             direction='column'
                             justify='space-around'
-                            alignItems='stretch'
+                            alignItems='center'
                             style={{ marginTop: "6rem" }}>
                             <Grid item>
                                 <Grid container justify='center'>
@@ -199,8 +197,6 @@ const Product = (props) => {
                                                 alt={coin}
                                                 height='100%'
                                                 width='100%'
-                                                // height={"30%"}
-                                                // width={"30%"}
                                             />
                                         </Icon>
                                     </Grid>
@@ -217,7 +213,9 @@ const Product = (props) => {
                                         borderRadius: 10,
                                         border: "2px solid #000",
                                     }}>
-                                    Redeem Now
+                                    <Typography variant='h6'>
+                                        Redeem Now
+                                    </Typography>
                                 </Button>
                             </Grid>
                         </Grid>

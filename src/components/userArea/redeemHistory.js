@@ -48,7 +48,11 @@ const RedeemHistory = (props) => {
             direction='column'
             alignItems='stretch'
             justify='center'>
-            <Grid item><Typography variant="h4" align="center">Redeemed products</Typography></Grid>
+            <Grid item>
+                <Typography variant='h4' align='center'>
+                    Redeemed products
+                </Typography>
+            </Grid>
             <Grid item>
                 <Grid container justify='center'>
                     {productHistory

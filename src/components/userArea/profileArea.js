@@ -1,10 +1,5 @@
 import { useState } from "react";
-import {
-    AppBar,
-    Box,
-    Grid,
-    makeStyles,
-} from "@material-ui/core";
+import { AppBar, Box, Grid, makeStyles } from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Profile from "./profile";

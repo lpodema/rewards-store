@@ -3,9 +3,9 @@ import {
     Route,
     Redirect,
 } from "react-router-dom";
-import Main from "./main";
-import ProfileArea from "../userArea/profileArea";
-import LoggingIn from "../loggingin";
+import Main from "./components/mainArea/main";
+import ProfileArea from "./components/userArea/profileArea";
+import LoggingIn from "./components/loggingin";
 
 const LoggedInRoute = ({ component: Component, authed, ...rest }) => {
     return (

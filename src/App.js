@@ -1,7 +1,7 @@
 import Header from "./components/headerArea/header";
 import theme from "./components/UI/theme";
 import { ThemeProvider } from "@material-ui/core";
-import Routing from "./components/mainArea/routing";
+import Routing from "./routing";
 import { Context } from "./store/store";
 import { useContext, useEffect } from "react";
 import { LOADING, LOG_USER } from "./utils/constants";
@@ -30,7 +30,6 @@ function App() {
             <LoadingModal
                 open={state.loading}
                 onClose={() => dispatch({ TYPE: LOADING, payload: false })}
-                // val={true}
                 text2='Loading...'
             />
         </ThemeProvider>

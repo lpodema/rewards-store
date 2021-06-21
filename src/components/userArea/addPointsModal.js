@@ -1,10 +1,5 @@
 import { LOADING, POINTS_BUTTONS, UPDATE_POINTS } from "../../utils/constants";
-import {
-    Modal,
-    Grid,
-    Button,
-    Typography,
-} from "@material-ui/core";
+import { Modal, Grid, Button, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useContext, useState } from "react";
 import { addPoints } from "../../services/services";

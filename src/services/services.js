@@ -57,7 +57,6 @@ export const getHistory = async () => {
 
     if (response.status === 200) {
         const content = await response.json();
-        // console.log(content);
         const sorted = await content.sort((a, b) => {
             const aDate = new Date(a.createDate);
             const bDate = new Date(b.createDate);
@@ -77,8 +76,6 @@ export const redeemProduct = async (productId) => {
     });
 
     if (response.status === 200) {
-        // const content = await response.json();
-        // console.log(content);
         return true;
     } else {
         console.log("REDEEM_PRODUCT: error en el fetch");
